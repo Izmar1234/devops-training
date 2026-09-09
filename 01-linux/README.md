@@ -1,227 +1,227 @@
-### Accès à distance en SSH avec PuTTY 
-Le plus célèbre sous Windows est sûrement PuTTY
+### Accès à distance en SSH avec PuTTY  
+Le plus célèbre sous Windows est sûrement PuTTY  
 ![alt text](image.png)
-### Commandes fondamentales Linux
+### Commandes fondamentales Linux  
 bin : contient des programmes (exécutables) susceptibles d'être utilisés par tous les utilisateurs de
-la machine.
-boot : fichiers permettant le démarrage de Linux.
-dev : fichiers contenant les périphériques.
-etc : fichiers de configuration.
-home : répertoires personnels des utilisateurs. 
+la machine.  
+boot : fichiers permettant le démarrage de Linux.  
+dev : fichiers contenant les périphériques.  
+etc : fichiers de configuration.  
+home : répertoires personnels des utilisateurs.  
 lib : dossier contenant les bibliothèques partagées (généralement des fichiers .so) utilisées par les
-programmes. C'est en fait là qu'on trouve l'équivalent des .dll de Windows
-### La boucle universelle de diagnostic 
-1. Cadrer : quel service, quels utilisateurs, depuis quand, après quel changement ?
-2. Observer : état, métriques, journaux, événements, dépendances. Ne rien modifier au début.
-3. Localiser : hôte, processus, socket, réseau, DNS, TLS, stockage, dépendance ou application.
-4. Formuler une hypothèse testable : « si X est la cause, alors Y doit être observable ».
-5. Tester avec la commande la moins intrusive possible.
-6. Corriger ou contourner par une action ciblée, réversible et autorisée.
-7. Vérifier du point de vue utilisateur, surveiller la stabilité, puis documenter.
+programmes. C'est en fait là qu'on trouve l'équivalent des .dll de Windows  
+### La boucle universelle de diagnostic  
+1. Cadrer : quel service, quels utilisateurs, depuis quand, après quel changement ?  
+2. Observer : état, métriques, journaux, événements, dépendances. Ne rien modifier au début.  
+3. Localiser : hôte, processus, socket, réseau, DNS, TLS, stockage, dépendance ou application.  
+4. Formuler une hypothèse testable : « si X est la cause, alors Y doit être observable ».  
+5. Tester avec la commande la moins intrusive possible.  
+6. Corriger ou contourner par une action ciblée, réversible et autorisée.  
+7. Vérifier du point de vue utilisateur, surveiller la stabilité, puis documenter.  
 ### Les règles d’or de production
 • Toujours connaître l’environnement courant : identité, hôte, session, distribution, noyau,
-répertoire et privilèges.
-• Lire avant d’écrire : status, show, get, list, test et --dry-run avant restart, reload, remove ou mkfs.
+répertoire et privilèges.  
+• Lire avant d’écrire : status, show, get, list, test et --dry-run avant restart, reload, remove ou mkfs.  
 • Copier explicitement les identifiants critiques ; ne pas dépendre d’un glob, d’une variable vide ou
 d’un nom ambigu.garde, snapshot, ancienne release, configuration
-précédente, commande de rollback.
-• Préserver un chemin de retour : sauve
-• Capturer l’heure en UTC, les commandes exécutées et les résultats importants.
-• Ne jamais coller en production une commande que l’on ne peut pas expliquer token par token.
+précédente, commande de rollback.  
+• Préserver un chemin de retour : sauve  
+• Capturer l’heure en UTC, les commandes exécutées et les résultats importants.  
+• Ne jamais coller en production une commande que l’on ne peut pas expliquer token par token.  
 • Ne jamais confondre « le processus tourne » avec « le service fonctionne » : vérifier une requête
-réelle et ses dépendances.
-### 1.2 Code de retour et enchaînements
-comma de_a && comma de_b # b seuleme t si a réussit
-comma de_a || comma de_b # b seuleme t si a échoue
-comma de_a ; comma de_b # b da s tous les cas
+réelle et ses dépendances.  
+### 1.2 Code de retour et enchaînements  
+comma de_a && comma de_b # b seuleme t si a réussit  
+comma de_a || comma de_b # b seuleme t si a échoue  
+comma de_a ; comma de_b # b da s tous les cas  
 
-if systemctl is-active --quiet nginx; then
-    printf '%s\n' 'nginx actif'
-else
-    printf '%s\n' 'nginx inactif' >&2
-    exit 1
-fi
-### 1.3 Entrée, sortie et erreurs
-![alt text](mermaid-diagram.png)
-Syntaxe	Signification
-< fichier	utiliser le fichier comme entrée
-> fichier	enregistrer stdout en remplaçant
->> fichier	ajouter stdout à la fin
-2> fichier	enregistrer stderr en remplaçant
-2>> fichier	ajouter stderr à la fin
-> fichier 2>&1	enregistrer stdout et stderr ensemble
-&> fichier	raccourci Bash pour les deux sorties
-a | b	envoyer stdout de A vers stdin de B
-2>&1 | tee fichier	afficher et enregistrer les deux sorties
+if systemctl is-active --quiet nginx; then  
+    printf '%s\n' 'nginx actif'  
+else  
+    printf '%s\n' 'nginx inactif' >&2  
+    exit 1  
+fi  
+### 1.3 Entrée, sortie et erreurs  
+![alt text](mermaid-diagram.png)  
+Syntaxe	Signification   
+< fichier	utiliser le fichier comme entrée   
+> fichier	enregistrer stdout en remplaçant  
+>> fichier	ajouter stdout à la fin  
+2> fichier	enregistrer stderr en remplaçant  
+2>> fichier	ajouter stderr à la fin  
+> fichier 2>&1	enregistrer stdout et stderr ensemble  
+&> fichier	raccourci Bash pour les deux sorties  
+a | b	envoyer stdout de A vers stdin de B  
+2>&1 | tee fichier	afficher et enregistrer les deux sorties  
 
-commade >sortie.txt # remplace stdout
-commade >>sortie.txt # ajoute stdout
-commade 2>erreurs.txt # remplace stderr
-commade >tout.log 2>&1 # stdout puis stderr vers le même finchier
-commade &>tout.log # raccourci Bash
-commade </chemi /e tree # stdi depuis u finchier
-commade | autre # stdout devie t stdi de l’autre comma de
-commade 2>&1 | tee tout.log # voir et e registrer stdout + stderr
-### Hiérarchie à connaître
-![alt text](Pasted image.png)
-### 2.2 Navigation et inspection
-stat /etc/passwd
-file /usr/bin/ssh
-readlink -f /var/run
-realpath ./chemin/../cible
-Commande	Question à laquelle elle répond
-stat	Quelles sont les métadonnées du fichier ?
-file	Quel est réellement le type du fichier ?
-readlink -f	Où mène réellement ce chemin ou ce lien ?
-realpath	Quel est le chemin absolu et normalisé ?
+commade >sortie.txt # remplace stdout  
+commade >>sortie.txt # ajoute stdout  
+commade 2>erreurs.txt # remplace stderr  
+commade >tout.log 2>&1 # stdout puis stderr vers le même finchier  
+commade &>tout.log # raccourci Bash  
+commade </chemi /e tree # stdi depuis u finchier  
+commade | autre # stdout devie t stdi de l’autre comma de  
+commade 2>&1 | tee tout.log # voir et e registrer stdout + stderr  
+### Hiérarchie à connaître  
+![alt text](Pasted image.png)  
+### 2.2 Navigation et inspection  
+stat /etc/passwd  
+file /usr/bin/ssh  
+readlink -f /var/run  
+realpath ./chemin/../cible  
+Commande	Question à laquelle elle répond  
+stat	Quelles sont les métadonnées du fichier ?  
+file	Quel est réellement le type du fichier ?  
+readlink -f	Où mène réellement ce chemin ou ce lien ?  
+realpath	Quel est le chemin absolu et normalisé ?  
 
-### 2.3 Créer, copier, déplacer, lier
-sudo install -d -m 0750 -o myapp -g myapp /var/lib/myapp
-Crée /var/lib/myapp, donne-le à l’utilisateur et au groupe myapp, accorde tous les droits au propriétaire, lecture et traversée au groupe, et aucun droit aux autres utilisateurs.
+### 2.3 Créer, copier, déplacer, lier  
+sudo install -d -m 0750 -o myapp -g myapp /var/lib/myapp  
+Crée /var/lib/myapp, donne-le à l’utilisateur et au groupe myapp, accorde tous les droits au propriétaire, lecture et traversée au groupe, et aucun droit aux autres utilisateurs.  
 
-cp fichier destination       # peut remplacer sans demander
-cp -i fichier destination    # demande avant de remplacer
-cp -n fichier destination    # refuse de remplacer
+cp fichier destination       # peut remplacer sans demander  
+cp -i fichier destination    # demande avant de remplacer  
+cp -n fichier destination    # refuse de remplacer  
 
-Différence entre lien dur et lien symbolique
-Propriété	Lien dur	Lien symbolique
-Commande	ln cible lien	ln -s cible lien
-Même inode que la cible	Oui	Non
-Peut viser un répertoire	Généralement non	Oui
-Peut traverser des systèmes de fichiers	Non	Oui
-Fonctionne si le premier nom est supprimé	Oui	Non, si c’était sa cible
-Peut pointer vers une cible inexistante	Non	Oui
-Contient un chemin vers la cible	Non	Oui
+Différence entre lien dur et lien symbolique  
+Propriété	Lien dur	Lien symbolique  
+Commande	ln cible lien	ln -s cible lien  
+Même inode que la cible	Oui	Non  
+Peut viser un répertoire	Généralement non	Oui  
+Peut traverser des systèmes de fichiers	Non	Oui  
+Fonctionne si le premier nom est supprimé	Oui	Non, si c’était sa cible  
+Peut pointer vers une cible inexistante	Non	Oui  
+Contient un chemin vers la cible	Non	Oui  
 
-On peut retenir cette image mentale :
+On peut retenir cette image mentale :  
 
-un lien dur est un deuxième nom pour les mêmes données ;
-un lien symbolique est un raccourci contenant le chemin vers une autre cible.
+un lien dur est un deuxième nom pour les mêmes données ;  
+un lien symbolique est un raccourci contenant le chemin vers une autre cible.  
 
-### 2.4 Supprimer sans catastrophe
+### 2.4 Supprimer sans catastrophe  
 
-# 1. Vérifier
-find /srv/myapp/cache -type f -mtime +14 -print
+# 1. Vérifier  
+find /srv/myapp/cache -type f -mtime +14 -print  
 
-# 2. Supprimer seulement après vérification
-find /srv/myapp/cache -type f -mtime +14 -delete
+# 2. Supprimer seulement après vérification  
+find /srv/myapp/cache -type f -mtime +14 -delete  
 
 
-###  2.5 Rechercher efficacement
-Commande	Résultat
-find /etc -type f -name '*.conf'	fichiers ordinaires terminant par .conf
-find /var/log/myapp -type f -mmin -30 -size +10M -print	fichiers de plus de 10 Mio modifiés récemment
-find /srv -xdev -type f -user olduser -print	fichiers appartenant à olduser, sans changer de système de fichiers
-find /tmp -type f -empty -print	fichiers ordinaires vides
-find /srv/app -type f -name '*.log' -exec gzip {} +
-Avec -exec, on appeler une commande qui effectuera une action sur chacun des fichiers trouvés. 
-find -name "*.sh" -exec chmod 600 {} \;
+###  2.5 Rechercher efficacement  
+Commande	Résultat  
+find /etc -type f -name '*.conf'	fichiers ordinaires terminant par .conf  
+find /var/log/myapp -type f -mmin -30 -size +10M -print	fichiers de plus de 10 Mio modifiés récemment  
+find /srv -xdev -type f -user olduser -print	fichiers appartenant à olduser, sans changer de système de fichiers  
+find /tmp -type f -empty -print	fichiers ordinaires vides  
+find /srv/app -type f -name '*.log' -exec gzip {} +  
+Avec -exec, on appeler une commande qui effectuera une action sur chacun des fichiers trouvés.   
+find -name "*.sh" -exec chmod 600 {} \;  
 
-Contrairement à la commande find, la commande locate utilise une base de données. Cela 
+Contrairement à la commande find, la commande locate utilise une base de données. Cela   
 permet d'obtenir un résultat plus rapide. Cette base de données est mise à jour par la cron. Mais il 
 est possible de forcer manuellement la mise à jour de cette base avec la commande updatedb
 Son utilisation est intuitive, il suffit d'indiquer le nom du fichier que vous voulez retrouver
 locate fichier.txt
 
 
-### 2.6 Taille, blocs et inodes
-df -hT                              # quel système de fichiers est plein ?
-df -ih                              # les inodes sont-ils épuisés ?
-du -xhd1 /var | sort -hr            # quel répertoire utilise l’espace ?
-du -xah /var/log | sort -h | tail   # quels éléments sont les plus gros ?
-stat fichier                        # quelles sont les propriétés d’un fichier ?
-du -h --max-depth=1 | sort -nr
+### 2.6 Taille, blocs et inodes  
+df -hT                              # quel système de fichiers est plein ?  
+df -ih                              # les inodes sont-ils épuisés ?  
+du -xhd1 /var | sort -hr            # quel répertoire utilise l’espace ?  
+du -xah /var/log | sort -h | tail   # quels éléments sont les plus gros ?  
+stat fichier                        # quelles sont les propriétés d’un fichier ?  
+du -h --max-depth=1 | sort -nr  
 
-lsof /var/log/app.log
-car le chemin n’existe plus. Dans ce cas, il faut utiliser :
-sudo lsof +L1
-À retenir :
-rm supprime le nom du fichier. Si un processus garde encore son inode ouvert, les données et l’espace disque restent présents jusqu’à la fermeture du fichier.
+lsof /var/log/app.log  
+car le chemin n’existe plus. Dans ce cas, il faut utiliser :  
+sudo lsof +L1  
+À retenir :  
+rm supprime le nom du fichier. Si un processus garde encore son inode ouvert, les données et l’espace disque restent présents jusqu’à la fermeture du fichier.  
 
-### 1.25 Extraire, trier et filtrer les données
--i : ne pas tenir compte de la casse (majuscules / minuscules)
-grep -i texte nomfichier
-Si, au contraire, on souhaite connaître toutes les lignes qui ne contiennent pas un mot donné, 
-utilisez -v 
-grep -v texte nomfichier
--r : rechercher dans tous les fichiers et sous-dossiers
-grep -r texte nomfichier
+### 1.25 Extraire, trier et filtrer les données  
+-i : ne pas tenir compte de la casse (majuscules / minuscules)  
+grep -i texte nomfichier  
+Si, au contraire, on souhaite connaître toutes les lignes qui ne contiennent pas un mot donné,  
+utilisez -v   
+grep -v texte nomfichier  
+-r : rechercher dans tous les fichiers et sous-dossiers  
+grep -r texte nomfichier  
 
 
-### Utilisateurs et groupes
-Pour ajouter un utilisateur, on utilise la commande useradd
-Les utilisateurs sont stockés dans le fichier /etc/passwd
-passwd utilisateur
-userdel -r utilisateur
-groups utilisateur
-usermod -G grafana utilisateur
-Ajouter un utilisateur à un groupe existant (en conservant les groupes actuels auxquels 
-appartient l'utilisateur)
-usermod -aG prometheus utilisateur
-Gestion des utilisateurs avec des privilèges sudo 
-usermod -aG wheel utilisateur
+### Utilisateurs et groupes  
+Pour ajouter un utilisateur, on utilise la commande useradd  
+Les utilisateurs sont stockés dans le fichier /etc/passwd  
+passwd utilisateur  
+userdel -r utilisateur  
+groups utilisateur  
+usermod -G grafana utilisateur  
+Ajouter un utilisateur à un groupe existant (en conservant les groupes actuels auxquels   
+appartient l'utilisateur)  
+usermod -aG prometheus utilisateur  
+Gestion des utilisateurs avec des privilèges sudo   
+usermod -aG wheel utilisateur  
 
-### 1.30 Groupes
-Les groupes sont disponibles dans le fichier /etc/group
-groupadd groupe
-groupdel groupe
-Supprimer l'utilisateur du groupe: gpasswd -d utilisateur grafana
+### 1.30 Groupes  
+Les groupes sont disponibles dans le fichier /etc/group  
+groupadd groupe  
+groupdel groupe  
+Supprimer l'utilisateur du groupe: gpasswd -d utilisateur grafana  
 
-### Droits sous Linux
-# Lire ses droits
-rwxr-xr--
-\ /\ /\ /
+### Droits sous Linux  
+# Lire ses droits  
+rwxr-xr--  
+\ /\ /\ /  
 v v v
-| | droits des autres utilisateurs (o)
+| | droits des autres utilisateurs (o)  
 | |
-| droits des utilisateurs appartenant au groupe (g)
+| droits des utilisateurs appartenant au groupe (g)  
 |
-droits du propriétaire (u)
+droits du propriétaire (u)  
 
-r= 4 si actif ou 0 si inactif
-w = 2 si actif ou 0 si inactif
-x = 1 si actif ou 0 si inactif
-Ainsi, rwx « vaut » 7 (4+2+1), r-x « vaut » 5 (4+1) et r-- « vaut » 4. Les droits complets (rwxr-xr--) 
-sont donc équivalent à 754
--rw-r--r-- 1 adriencl users 8 1 janv. 12:56 fichier
-• d : répertoire
-• l : lien symbolique
-• c : périphérique de type caractère
-• b : périphérique de type bloc
-• p : fifo
-• s : socket
-• - : fichier classique
-# Ajouter ou ôter des droits
-Pour ajouter le droit de lecture à tout le monde sur mon fichier  : chmod a+r fichier
-Pour ajouter le droit de modification au groupe  : chmod g+w fichier
-Pour retirer le droit de lecture aux autres : chmod o-r fichier
-#  Changer les utilisateurs et groupes sur les fichiers
-Pour changer le possesseur du fichier, on utilise la commande chown
-Si on veut le faire de manière récursive, on utilise -R
-Changer le groupe uniquement, c'est la commande chgrp
+r= 4 si actif ou 0 si inactif  
+w = 2 si actif ou 0 si inactif  
+x = 1 si actif ou 0 si inactif  
+Ainsi, rwx « vaut » 7 (4+2+1), r-x « vaut » 5 (4+1) et r-- « vaut » 4. Les droits complets (rwxr-xr--)  
+sont donc équivalent à 754  
+-rw-r--r-- 1 adriencl users 8 1 janv. 12:56 fichier  
+• d : répertoire  
+• l : lien symbolique  
+• c : périphérique de type caractère  
+• b : périphérique de type bloc  
+• p : fifo  
+• s : socket  
+• - : fichier classique  
+# Ajouter ou ôter des droits  
+Pour ajouter le droit de lecture à tout le monde sur mon fichier  : chmod a+r fichier  
+Pour ajouter le droit de modification au groupe  : chmod g+w fichier  
+Pour retirer le droit de lecture aux autres : chmod o-r fichier  
+#  Changer les utilisateurs et groupes sur les fichiers  
+Pour changer le possesseur du fichier, on utilise la commande chown  
+Si on veut le faire de manière récursive, on utilise -R  
+Changer le groupe uniquement, c'est la commande chgrp  
 
-###  La commande sed
-Lecture d’un fichier
-sed '' fichier.txt
+###  La commande sed  
+Lecture d’un fichier  
+sed '' fichier.txt  
 
-La commande d (delete)
-sed -e '2 d; 4 d' fichier.txt
-On peut aussi utiliser l'adressage par intervalle
-sed '2,3 d' fichier.txt
+La commande d (delete)  
+sed -e '2 d; 4 d' fichier.txt  
+On peut aussi utiliser l'adressage par intervalle  
+sed '2,3 d' fichier.txt  
  on supprimera toutes les lignes commençant par la lettre « L » (le ^
-est un métacaractère signifiant début de ligne)
-sed '/^L/ d' fichier.txt
-supprimera toutes les lignes comprises entre Ligne début et 'Ligne 
-fin', donc tout le fichier.
-sed '/^Ligne debut/,/^Ligne fin/d' fichier.txt
- La commande p (print)
- sed -n '1,4p' fichier.txt
- Seules les lignes contenant le motif seront affichées
-sed -n '/Li/p' fichier.txt
-La commande w (write)
-Stocker dans le fichier "resultat.txt " toutes les lignes qui commencent par « Li »
-sed -n '/Li/w resultat.txt' fichier.txt
- Négation d'une commande (!)
+est un métacaractère signifiant début de ligne)  
+sed '/^L/ d' fichier.txt  
+supprimera toutes les lignes comprises entre Ligne début et 'Ligne
+fin', donc tout le fichier.  
+sed '/^Ligne debut/,/^Ligne fin/d' fichier.txt  
+ La commande p (print)  
+ sed -n '1,4p' fichier.txt  
+ Seules les lignes contenant le motif seront affichées  
+sed -n '/Li/p' fichier.txt  
+La commande w (write)  
+Stocker dans le fichier "resultat.txt " toutes les lignes qui commencent par « Li »  
+sed -n '/Li/w resultat.txt' fichier.txt  
+ Négation d'une commande (!)  
  Le caractère ! placé devant une commande permet d'exécuter cette dernière sur toutes les lignes 
 sauf sur celles correspondant à la partie adresse.
 sed -n '/Li/!p' fichier.txt
