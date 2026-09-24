@@ -1,6 +1,4 @@
-# ============================================================
-# SERVEUR PUBLIC DOCKER
-# ============================================================
+
 
 resource "aws_instance" "docker" {
   ami           = data.aws_ssm_parameter.amazon_linux_2023_ami.value
@@ -12,9 +10,7 @@ resource "aws_instance" "docker" {
     aws_security_group.public_server.id
   ]
 
-  # Le serveur public doit pouvoir être joint en SSH
-  # depuis le poste Ubuntu autorisé.
-  associate_public_ip_address = true
+
 
   key_name = aws_key_pair.main.key_name
 
@@ -54,7 +50,7 @@ resource "aws_instance" "docker" {
     Name     = "${local.name_prefix}_ec2_docker"
     Role     = "docker-server"
     Network  = "public"
-    Schedule = "office-hours"
+    Schedule = "iac-office-hours"
   }
 
   # Le serveur ne doit démarrer qu'après la création de sa route
@@ -118,7 +114,7 @@ resource "aws_instance" "nodejs" {
     Name     = "${local.name_prefix}_ec2_nodejs"
     Role     = "nodejs-server"
     Network  = "private"
-    Schedule = "office-hours"
+    Schedule = "iac-office-hours"
   }
 
   # Le serveur privé a besoin de la route NAT pour installer

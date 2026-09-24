@@ -1034,4 +1034,3 @@ Example: increase the min capacity to 10 at 5 pm on Fridays
 - There is no “chaining” of replication:
   - If Bucket 1 → Bucket 2 → Bucket 3
   - Objects originally created in Bucket 1 are not replicated from Bucket 2 to Bucket 3. 
-  
