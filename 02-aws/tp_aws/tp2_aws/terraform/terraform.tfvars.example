@@ -1,0 +1,5 @@
+last_name  = "nom"
+first_name = "prenom"
+
+expiration_days = 7
+lambda_runtime  = "python3.12"

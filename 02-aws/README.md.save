@@ -1,0 +1,27 @@
+### lab Kodekloud :  
+## using AWS Client :  
+# create key-pair 
+  
+aws ec2 create-key-pair \  
+	--regio ys-est-1 \    
+	--key-name devops-kp \    
+	--key-type rsa \  
+	--query 'keyMaterial' \  
+	--output text > devops-kp.pem  
+  
+chmod 400 devops-kp.pem  
+to verify  
+aws ec2 describe-key-pairs \  
+	--region us-east-a \  
+	--key-names devops-kp \  
+	--query 'KeyPairs[0].{Name:keyName, Type:keyType}' \  
+	--output table  
+create a security groupe under default VPC : 
+DEFAULT_VPC_ID=$(aws ec2 describe-vpcs \  
+	--region us-est-1 \
+	--filters "Name-is-default, Values=true \  
+	--query "Vpcs[0].VpcId" \
+	--output text)  
+echo "DEFAULT_VPC_ID"  
+
+

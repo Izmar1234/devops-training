@@ -1,0 +1,25 @@
+# Répertoire local créé par terraform init
+.terraform/
+
+# States locaux éventuels
+*.tfstate
+*.tfstate.*
+
+# Plans Terraform enregistrés
+*.tfplan
+tfplan-*
+
+# Fichiers d'erreur
+crash.log
+crash.*.log
+
+# Valeurs propres à l'environnement local
+terraform.tfvars
+*.auto.tfvars
+
+# Archives Lambda générées automatiquement
+lambda/*.zip
+
+# Clés privées SSH
+*.pem
+*.key

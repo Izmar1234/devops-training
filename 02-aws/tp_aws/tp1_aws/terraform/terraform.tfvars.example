@@ -1,0 +1,10 @@
+last_name  = "nom"
+first_name = "prenom"
+
+availability_zone = "eu-west-3a"
+
+public_subnet_cidr  = "10.0.12.0/24"
+private_subnet_cidr = "10.0.11.0/24"
+
+# Il est préférable d'utiliser son adresse IPv4 publique suivie de /32.
+web_ingress_cidr = "203.0.113.10/32"

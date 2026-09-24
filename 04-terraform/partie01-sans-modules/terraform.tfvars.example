@@ -1,0 +1,18 @@
+# Région et identité
+aws_region = "eu-west-3"
+
+last_name  = "nom"
+first_name = "prenom"
+
+
+# Infrastructure existante fournie par le TP
+existing_vpc_id              = "vpc-xxxxxxxxxxxxxxxxx"
+existing_internet_gateway_id = "igw-xxxxxxxxxxxxxxxxx"
+existing_nat_gateway_id      = "nat-xxxxxxxxxxxxxxxxx"
+
+ssm_instance_profile_name = "AmazonEC2RoleForSSM"
+
+
+# Caractéristiques EC2 demandées par le TP
+instance_type    = "t3.micro"
+root_volume_size = 8
