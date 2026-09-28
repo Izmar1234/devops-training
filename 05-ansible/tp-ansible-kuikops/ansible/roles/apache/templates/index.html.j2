@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TP Ansible - {{ ansible_facts['hostname'] }}</title>
+</head>
+<body>
+  <h1>
+    Hello World from the {{ ansible_facts['hostname'] }},
+    {{ ansible_facts['default_ipv4']['address'] }},
+    I have a {{ ansible_facts['distribution'] }} OS
+    and a total of
+    {{ (ansible_facts['memtotal_mb'] / 1024) | round(1) }}
+    GB of memory
+  </h1>
+</body>
+</html>

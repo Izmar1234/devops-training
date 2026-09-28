@@ -1,0 +1,10 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/apache
+apache_package_name: apache2
+apache_service_name: apache2
+apache_document_root: /var/www/html
+
+apache_required_mounts:
+  - /var/www
+  - /var/log/apache2

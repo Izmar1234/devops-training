@@ -1,0 +1,20 @@
+{{ apache_log_directory }}/*.log {
+    daily
+    missingok
+    rotate {{ apache_logrotate_retention }}
+    compress
+    delaycompress
+    notifempty
+    create 0640 root adm
+    sharedscripts
+    prerotate
+        if [ -d /etc/logrotate.d/httpd-prerotate ]; then
+            /usr/bin/run-parts /etc/logrotate.d/httpd-prerotate
+        fi
+    endscript
+    postrotate
+        if /usr/bin/systemctl is-active --quiet apache2; then
+            /usr/bin/systemctl reload apache2 >/dev/null
+        fi
+    endscript
+}

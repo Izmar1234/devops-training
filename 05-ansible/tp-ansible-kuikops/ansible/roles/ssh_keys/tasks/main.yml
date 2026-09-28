@@ -1,0 +1,50 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/ssh_keys
+- name: Vérifier la définition des utilisateurs SSH
+  ansible.builtin.assert:
+    that:
+      - item.name is defined
+      - item.name | length > 0
+      - item.public_keys is defined
+      - item.public_keys is sequence
+      - item.public_keys is not string
+      - item.public_keys | length > 0
+    fail_msg: >-
+      Chaque utilisateur SSH doit avoir un nom et une liste
+      public_keys contenant au moins une clé publique.
+  loop: "{{ ssh_managed_users }}"
+  loop_control:
+    label: "{{ item.name | default('utilisateur-invalide') }}"
+
+- name: Créer les utilisateurs SSH
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    shell: /bin/bash
+    create_home: true
+    state: present
+  loop: "{{ ssh_managed_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Créer les répertoires SSH
+  ansible.builtin.file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: "0700"
+  loop: "{{ ssh_managed_users }}"
+  loop_control:
+    label: "{{ item.name }}"
+
+- name: Installer les clés publiques autorisées
+  ansible.builtin.copy:
+    content: "{{ (item.public_keys | unique | join('\n')) ~ '\n' }}"
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: "0600"
+  loop: "{{ ssh_managed_users }}"
+  loop_control:
+    label: "{{ item.name }}"

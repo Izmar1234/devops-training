@@ -1,0 +1,22 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/jenkins
+jenkins_java_packages:
+  - fontconfig
+  - openjdk-21-jre
+  - python3-debian
+
+jenkins_repository_key_url: >-
+  https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key
+
+jenkins_repository_key_path: /etc/apt/keyrings/jenkins-keyring.asc
+
+jenkins_repository_uri: https://pkg.jenkins.io/debian-stable
+jenkins_repository_suite: binary/
+
+jenkins_package_name: jenkins
+jenkins_service_name: jenkins
+jenkins_port: 8080
+
+jenkins_home: /var/lib/jenkins
+jenkins_initial_password_file: /var/lib/jenkins/secrets/initialAdminPassword

@@ -1,0 +1,53 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/logrotate
+- name: Vérifier que le répertoire des logs Apache est monté
+  ansible.builtin.assert:
+    that:
+      - apache_log_directory in
+        (ansible_facts['mounts'] | map(attribute='mount') | list)
+    fail_msg: >-
+      Le répertoire {{ apache_log_directory }} n'est pas un
+      filesystem monté. La configuration Logrotate est interrompue.
+
+- name: Installer Logrotate
+  ansible.builtin.apt:
+    name: "{{ logrotate_package_name }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Déployer la configuration Logrotate Apache
+  ansible.builtin.template:
+    src: apache2.j2
+    dest: /etc/logrotate.d/apache2
+    owner: root
+    group: root
+    mode: "0644"
+    validate: "/usr/sbin/logrotate --debug %s"
+
+- name: Activer et démarrer le timer Logrotate
+  ansible.builtin.systemd_service:
+    name: "{{ logrotate_timer_name }}"
+    enabled: true
+    state: started
+
+- name: Vérifier la configuration Logrotate complète
+  ansible.builtin.command:
+    argv:
+      - /usr/sbin/logrotate
+      - --debug
+      - /etc/logrotate.conf
+  register: logrotate_debug
+  changed_when: false
+  check_mode: false
+
+- name: Vérifier que le timer Logrotate est actif
+  ansible.builtin.command:
+    argv:
+      - /usr/bin/systemctl
+      - is-active
+      - "{{ logrotate_timer_name }}"
+  register: logrotate_timer_status
+  changed_when: false
+  check_mode: false

@@ -1,0 +1,32 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/filesystems
+- name: Vérifier la définition des filesystems
+  ansible.builtin.assert:
+    that:
+      - front_filesystems is sequence
+      - front_filesystems is not string
+      - front_filesystems | length == 2
+    fail_msg: >-
+      Chaque serveur Front doit définir exactement deux filesystems
+      dans front_filesystems.
+
+- name: Lire les disques et leurs numéros de série
+  ansible.builtin.command:
+    argv:
+      - lsblk
+      - --nodeps
+      - --noheadings
+      - --output
+      - PATH,SERIAL
+  register: filesystem_lsblk
+  changed_when: false
+  check_mode: false
+
+- name: Configurer chaque volume
+  ansible.builtin.include_tasks:
+    file: configure_volume.yml
+  loop: "{{ front_filesystems }}"
+  loop_control:
+    loop_var: volume
+    label: "{{ volume.name }}"

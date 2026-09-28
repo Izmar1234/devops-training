@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/logrotate
+logrotate_package_name: logrotate
+logrotate_timer_name: logrotate.timer
+
+apache_log_directory: /var/log/apache2
+apache_logrotate_retention: 14

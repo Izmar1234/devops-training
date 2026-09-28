@@ -1,0 +1,259 @@
+#SPDX-License-Identifier: MIT-0
+# tasks file for roles/glpi
+---
+- name: Vérifier les variables obligatoires de GLPI
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution == "Ubuntu"
+      - glpi_version | length > 0
+      - glpi_download_url | length > 0
+      - glpi_install_dir | length > 0
+      - glpi_document_root | length > 0
+      - glpi_db_host | length > 0
+      - glpi_db_port | int > 0
+      - glpi_db_name | length > 0
+      - glpi_db_user | length > 0
+      - glpi_db_password is defined
+      - glpi_db_password | length >= 12
+      - glpi_admin_user | length > 0
+      - glpi_admin_password is defined
+      - glpi_admin_password | length >= 12
+    fail_msg: >-
+      Une ou plusieurs variables GLPI sont absentes ou invalides.
+  no_log: true
+
+- name: Installer Apache, PHP et les dépendances de GLPI
+  ansible.builtin.apt:
+    name: "{{ glpi_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Activer le module Apache rewrite
+  community.general.apache2_module:
+    name: rewrite
+    state: present
+  notify: Recharger Apache
+
+- name: Activer et démarrer Apache
+  ansible.builtin.service:
+    name: apache2
+    state: started
+    enabled: true
+
+- name: Vérifier la connexion de GLPI à MariaDB
+  ansible.mariadb.mariadb_query:
+    login_host: "{{ glpi_db_host }}"
+    login_port: "{{ glpi_db_port }}"
+    login_user: "{{ glpi_db_user }}"
+    login_password: "{{ glpi_db_password }}"
+    login_db: "{{ glpi_db_name }}"
+    connect_timeout: 10
+    query: SELECT 1 AS connection_test
+  changed_when: false
+  no_log: true
+
+- name: Créer le répertoire parent de GLPI
+  ansible.builtin.file:
+    path: /var/www
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Télécharger l'archive GLPI
+  ansible.builtin.get_url:
+    url: "{{ glpi_download_url }}"
+    dest: "{{ glpi_archive_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+    timeout: 60
+
+- name: Extraire GLPI dans le répertoire web
+  ansible.builtin.unarchive:
+    src: "{{ glpi_archive_path }}"
+    dest: /var/www
+    remote_src: true
+    creates: "{{ glpi_install_dir }}/bin/console"
+  register: glpi_archive_extraction
+
+- name: Protéger le code source de GLPI
+  ansible.builtin.file:
+    path: "{{ glpi_install_dir }}"
+    state: directory
+    owner: root
+    group: "{{ glpi_web_group }}"
+    recurse: true
+  when: glpi_archive_extraction.changed | default(false)
+
+- name: Attribuer les répertoires modifiables à Apache après extraction
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ glpi_web_user }}"
+    group: "{{ glpi_web_group }}"
+    recurse: true
+  loop:
+    - "{{ glpi_install_dir }}/config"
+    - "{{ glpi_install_dir }}/files"
+    - "{{ glpi_install_dir }}/marketplace"
+    - "{{ glpi_install_dir }}/plugins"
+  when: glpi_archive_extraction.changed | default(false)
+
+- name: Garantir les permissions des répertoires modifiables
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ glpi_web_user }}"
+    group: "{{ glpi_web_group }}"
+    mode: "0750"
+  loop:
+    - "{{ glpi_install_dir }}/config"
+    - "{{ glpi_install_dir }}/files"
+    - "{{ glpi_install_dir }}/marketplace"
+    - "{{ glpi_install_dir }}/plugins"
+
+- name: Installer le VirtualHost Apache de GLPI
+  ansible.builtin.template:
+    src: glpi.conf.j2
+    dest: "/etc/apache2/sites-available/{{ glpi_apache_site_name }}"
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Recharger Apache
+
+- name: Désactiver le site Apache par défaut
+  ansible.builtin.command:
+    cmd: a2dissite 000-default.conf
+    removes: /etc/apache2/sites-enabled/000-default.conf
+  notify: Recharger Apache
+
+- name: Activer le site Apache de GLPI
+  ansible.builtin.command:
+    cmd: "a2ensite {{ glpi_apache_site_name }}"
+    creates: "/etc/apache2/sites-enabled/{{ glpi_apache_site_name }}"
+  notify: Recharger Apache
+
+- name: Vérifier la syntaxe de la configuration Apache
+  ansible.builtin.command:
+    cmd: apache2ctl configtest
+  changed_when: false
+
+- name: Appliquer immédiatement la configuration Apache
+  ansible.builtin.meta: flush_handlers
+
+- name: Vérifier que l'interface web GLPI répond localement
+  ansible.builtin.uri:
+    url: http://127.0.0.1/
+    status_code: 200
+    return_content: false
+    follow_redirects: all
+
+- name: Vérifier si GLPI est déjà initialisé
+  ansible.builtin.stat:
+    path: "{{ glpi_install_dir }}/config/config_db.php"
+  register: glpi_database_configuration
+
+- name: Initialiser la base de données GLPI
+  ansible.builtin.command:
+    argv:
+      - php
+      - bin/console
+      - database:install
+      - "--db-host={{ glpi_db_host }}"
+      - "--db-port={{ glpi_db_port }}"
+      - "--db-name={{ glpi_db_name }}"
+      - "--db-user={{ glpi_db_user }}"
+      - "--db-password={{ glpi_db_password }}"
+      - "--default-language=fr_FR"
+      - --no-interaction
+      - --no-telemetry
+    chdir: "{{ glpi_install_dir }}"
+  become_user: "{{ glpi_web_user }}"
+  when: not glpi_database_configuration.stat.exists
+  no_log: true
+
+- name: Créer le répertoire des marqueurs Ansible de GLPI
+  ansible.builtin.file:
+    path: /var/lib/glpi-ansible
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+
+- name: Vérifier si le compte administrateur a été sécurisé
+  ansible.builtin.stat:
+    path: /var/lib/glpi-ansible/admin-password-secured
+  register: glpi_admin_security_marker
+
+- name: Modifier le mot de passe administrateur par défaut
+  ansible.builtin.command:
+    argv:
+      - php
+      - bin/console
+      - user:reset_password
+      - "--password={{ glpi_admin_password }}"
+      - "{{ glpi_admin_user }}"
+    chdir: "{{ glpi_install_dir }}"
+  become_user: "{{ glpi_web_user }}"
+  when: not glpi_admin_security_marker.stat.exists
+  no_log: true
+
+- name: Enregistrer la sécurisation du compte administrateur
+  ansible.builtin.file:
+    path: /var/lib/glpi-ansible/admin-password-secured
+    state: touch
+    owner: root
+    group: root
+    mode: "0600"
+  when: not glpi_admin_security_marker.stat.exists
+
+- name: Vérifier si les comptes par défaut ont été désactivés
+  ansible.builtin.stat:
+    path: /var/lib/glpi-ansible/default-users-disabled
+  register: glpi_default_users_marker
+
+- name: Désactiver les comptes GLPI par défaut inutiles
+  ansible.builtin.command:
+    argv:
+      - php
+      - bin/console
+      - user:disable
+      - "{{ item }}"
+    chdir: "{{ glpi_install_dir }}"
+  become_user: "{{ glpi_web_user }}"
+  loop:
+    - tech
+    - normal
+    - post-only
+  when: not glpi_default_users_marker.stat.exists
+
+- name: Enregistrer la désactivation des comptes par défaut
+  ansible.builtin.file:
+    path: /var/lib/glpi-ansible/default-users-disabled
+    state: touch
+    owner: root
+    group: root
+    mode: "0600"
+  when: not glpi_default_users_marker.stat.exists
+
+- name: Supprimer le script d'installation web
+  ansible.builtin.file:
+    path: "{{ glpi_install_dir }}/install/install.php"
+    state: absent
+
+- name: Activer et démarrer le service cron
+  ansible.builtin.service:
+    name: cron
+    state: started
+    enabled: true
+
+- name: Exécuter les actions automatiques GLPI chaque minute
+  ansible.builtin.cron:
+    name: Actions automatiques GLPI
+    user: "{{ glpi_web_user }}"
+    minute: "*"
+    job: "/usr/bin/php {{ glpi_install_dir }}/front/cron.php >/dev/null 2>&1"
+    cron_file: glpi

@@ -1,0 +1,18 @@
+---
+ssh_managed_users:
+  - name: izmar
+    public_keys:
+      - >-
+        {{ lookup(
+          'ansible.builtin.file',
+          lookup('ansible.builtin.env', 'HOME')
+          + '/.ssh/tp_ansible_kuikops.pub'
+        ) }}
+  - name: douaa
+    public_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC2NK+3HEhXFJEc+mnYclmE/z+5EMFcBHIji73WExpVd douaa-tp-ansible"
+
+  - name: amine
+    public_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK+drrQWYAeAA0VC9sRatob/LyP1DzgWjcMrCWiXnFOE amine-benomar"
+ 

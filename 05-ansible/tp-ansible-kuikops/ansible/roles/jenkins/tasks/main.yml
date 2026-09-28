@@ -1,0 +1,95 @@
+#SPDX-License-Identifier: MIT-0
+
+# tasks file for roles/jenkins
+---
+- name: Vérifier les variables obligatoires de Jenkins
+  ansible.builtin.assert:
+    that:
+      - ansible_facts.distribution == "Ubuntu"
+      - jenkins_repository_key_url | length > 0
+      - jenkins_repository_key_path | length > 0
+      - jenkins_repository_uri | length > 0
+      - jenkins_repository_suite | length > 0
+      - jenkins_port | int > 0
+      - jenkins_port | int <= 65535
+    fail_msg: >-
+      Une ou plusieurs variables Jenkins sont absentes ou invalides.
+
+- name: Installer Java 21 et les dépendances Jenkins
+  ansible.builtin.apt:
+    name: "{{ jenkins_java_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Vérifier la version de Java
+  ansible.builtin.command:
+    cmd: java -version
+  register: jenkins_java_version
+  changed_when: false
+
+- name: Créer le répertoire des clés APT
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Installer la clé officielle du dépôt Jenkins
+  ansible.builtin.get_url:
+    url: "{{ jenkins_repository_key_url }}"
+    dest: "{{ jenkins_repository_key_path }}"
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Ajouter le dépôt Jenkins LTS
+  ansible.builtin.deb822_repository:
+    name: jenkins
+    types:
+      - deb
+    uris:
+      - "{{ jenkins_repository_uri }}"
+    suites:
+      - "{{ jenkins_repository_suite }}"
+    signed_by: "{{ jenkins_repository_key_path }}"
+    state: present
+    enabled: true
+  register: jenkins_repository_configuration
+
+- name: Actualiser le cache APT après ajout du dépôt Jenkins
+  ansible.builtin.apt:
+    update_cache: true
+  when: jenkins_repository_configuration.changed
+
+- name: Installer Jenkins
+  ansible.builtin.apt:
+    name: "{{ jenkins_package_name }}"
+    state: present
+
+- name: Activer et démarrer Jenkins
+  ansible.builtin.service:
+    name: "{{ jenkins_service_name }}"
+    state: started
+    enabled: true
+
+- name: Attendre que Jenkins écoute sur le port configuré
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: "{{ jenkins_port }}"
+    state: started
+    timeout: 120
+
+- name: Vérifier que l'interface Jenkins répond localement
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ jenkins_port }}/login"
+    status_code: 200
+    follow_redirects: all
+    return_content: false
+
+- name: Vérifier la présence du mot de passe initial Jenkins
+  ansible.builtin.stat:
+    path: "{{ jenkins_initial_password_file }}"
+  register: jenkins_initial_password
+

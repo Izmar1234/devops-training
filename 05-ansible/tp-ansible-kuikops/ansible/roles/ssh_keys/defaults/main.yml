@@ -1,0 +1,4 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/ssh_keys
+ssh_managed_users: []

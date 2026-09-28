@@ -1,0 +1,90 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/apache
+- name: Configurer le nom d'hôte
+  ansible.builtin.hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: Actualiser les facts après le changement de nom
+  ansible.builtin.setup:
+
+- name: Vérifier que les filesystems requis sont montés
+  ansible.builtin.assert:
+    that:
+      - item in (ansible_facts['mounts'] | map(attribute='mount') | list)
+    fail_msg: >-
+      Le filesystem {{ item }} n'est pas monté.
+      Apache ne sera pas installé ou démarré.
+  loop: "{{ apache_required_mounts }}"
+
+- name: Installer Apache
+  ansible.builtin.apt:
+    name: "{{ apache_package_name }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Créer le répertoire du site
+  ansible.builtin.file:
+    path: "{{ apache_document_root }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Créer le répertoire override de systemd
+  ansible.builtin.file:
+    path: "/etc/systemd/system/{{ apache_service_name }}.service.d"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Faire dépendre Apache des montages EBS
+  ansible.builtin.copy:
+    dest: >-
+      /etc/systemd/system/{{ apache_service_name }}.service.d/mounts.conf
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      [Unit]
+      RequiresMountsFor=/var/www /var/log/apache2
+      After=local-fs.target
+  notify: Recharger systemd et redémarrer Apache
+
+- name: Déployer la page HTML dynamique
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: "{{ apache_document_root }}/index.html"
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Recharger Apache
+
+- name: Activer et démarrer Apache
+  ansible.builtin.systemd_service:
+    name: "{{ apache_service_name }}"
+    enabled: true
+    state: started
+
+- name: Appliquer immédiatement les handlers Apache
+  ansible.builtin.meta: flush_handlers
+
+- name: Vérifier la page Apache localement
+  ansible.builtin.uri:
+    url: http://127.0.0.1/
+    return_content: true
+    status_code: 200
+  register: apache_http_test
+  changed_when: false
+  when: not ansible_check_mode
+
+- name: Vérifier le contenu dynamique de la page
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['hostname'] in apache_http_test.content
+      - ansible_facts['default_ipv4']['address'] in apache_http_test.content
+      - ansible_facts['distribution'] in apache_http_test.content
+    fail_msg: "La page Apache ne contient pas les facts attendus."
+  when: not ansible_check_mode

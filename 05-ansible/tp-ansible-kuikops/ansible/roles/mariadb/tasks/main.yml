@@ -1,0 +1,86 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks file for roles/mariadb
+- name: Vérifier les variables obligatoires de MariaDB
+  ansible.builtin.assert:
+    that:
+      - mariadb_bind_address is defined
+      - mariadb_bind_address | length > 0
+      - mariadb_port | int > 0
+      - glpi_db_name | length > 0
+      - glpi_db_user | length > 0
+      - glpi_db_password is defined
+      - glpi_db_password | length >= 12
+    fail_msg: >-
+      Une ou plusieurs variables MariaDB sont absentes ou invalides.
+  no_log: true
+
+- name: Installer MariaDB et le connecteur Python
+  ansible.builtin.apt:
+    name: "{{ mariadb_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Activer et démarrer MariaDB
+  ansible.builtin.service:
+    name: "{{ mariadb_service_name }}"
+    state: started
+    enabled: true
+
+- name: Installer la configuration MariaDB pour GLPI
+  ansible.builtin.template:
+    src: 60-glpi.cnf.j2
+    dest: /etc/mysql/mariadb.conf.d/60-glpi.cnf
+    owner: root
+    group: root
+    mode: "0644"
+    backup: true
+  notify: Redémarrer MariaDB
+
+- name: Appliquer immédiatement le changement de configuration
+  ansible.builtin.meta: flush_handlers
+
+- name: Attendre que MariaDB écoute sur son adresse privée
+  ansible.builtin.wait_for:
+    host: "{{ mariadb_bind_address }}"
+    port: "{{ mariadb_port }}"
+    state: started
+    timeout: 30
+
+- name: Créer la base de données GLPI
+  ansible.mariadb.mariadb_db:
+    name: "{{ glpi_db_name }}"
+    encoding: "{{ glpi_db_encoding }}"
+    collation: "{{ glpi_db_collation }}"
+    state: present
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+- name: Vérifier si les fuseaux horaires sont chargés dans MariaDB
+  ansible.mariadb.mariadb_query:
+    login_unix_socket: /run/mysqld/mysqld.sock
+    query: SELECT COUNT(*) AS timezone_count FROM mysql.time_zone_name
+  register: mariadb_timezone_status
+  changed_when: false
+
+- name: Charger les fuseaux horaires dans MariaDB
+  ansible.builtin.shell: |
+    set -o pipefail
+    mariadb-tzinfo-to-sql /usr/share/zoneinfo |
+      mariadb --protocol=socket -uroot mysql
+  args:
+    executable: /bin/bash
+  when: >-
+    mariadb_timezone_status.query_result[0][0].timezone_count | int == 0
+  changed_when: true
+
+- name: Créer l'utilisateur MariaDB de GLPI
+  ansible.mariadb.mariadb_user:
+    name: "{{ glpi_db_user }}"
+    host: "{{ glpi_db_user_host }}"
+    password: "{{ glpi_db_password }}"
+    priv: "{{ glpi_db_name }}.*:ALL/mysql.time_zone_name:SELECT"
+    state: present
+    append_privs: false
+    login_unix_socket: /run/mysqld/mysqld.sock
+  no_log: true

@@ -1,0 +1,11 @@
+# Ce fichier est géré par Ansible.
+# Toute modification manuelle pourra être remplacée.
+
+[mysqld]
+bind-address = {{ mariadb_bind_address }}
+port = {{ mariadb_port }}
+
+character-set-server = {{ glpi_db_encoding }}
+collation-server = {{ glpi_db_collation }}
+
+skip-name-resolve

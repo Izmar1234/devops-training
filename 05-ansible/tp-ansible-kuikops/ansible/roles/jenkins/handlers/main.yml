@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+# handlers file for roles/jenkins
+---
+- name: Redémarrer Jenkins
+  ansible.builtin.service:
+    name: "{{ jenkins_service_name }}"
+    state: restarted
+  listen: Redémarrer Jenkins

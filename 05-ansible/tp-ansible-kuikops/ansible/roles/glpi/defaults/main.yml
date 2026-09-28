@@ -1,0 +1,46 @@
+#SPDX-License-Identifier: MIT-0
+---
+# defaults file for roles/glpi
+glpi_version: "11.0.9"
+
+glpi_download_url: >-
+  https://github.com/glpi-project/glpi/releases/download/{{ glpi_version }}/glpi-{{ glpi_version }}.tgz
+
+glpi_archive_path: "/tmp/glpi-{{ glpi_version }}.tgz"
+glpi_install_dir: /var/www/glpi
+glpi_document_root: /var/www/glpi/public
+
+glpi_web_user: www-data
+glpi_web_group: www-data
+
+glpi_packages:
+  - acl
+  - apache2
+  - cron
+  - mariadb-client
+  - python3-pymysql
+  - php
+  - libapache2-mod-php
+  - php-apcu
+  - php-bcmath
+  - php-bz2
+  - php-curl
+  - php-gd
+  - php-intl
+  - php-ldap
+  - php-mbstring
+  - php-mysql
+  - php-soap
+  - php-xml
+  - php-zip
+
+glpi_db_host: "10.0.21.140"
+glpi_db_port: 3306
+glpi_db_name: glpi
+glpi_db_user: glpi
+glpi_db_password: "{{ vault_glpi_db_password }}"
+glpi_admin_user: glpi
+glpi_admin_password: "{{ vault_glpi_admin_password }}"
+
+glpi_apache_site_name: glpi.conf
+glpi_server_name: "{{ ansible_facts.default_ipv4.address }}"

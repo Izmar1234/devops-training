@@ -1,0 +1,105 @@
+---
+- name: Vérifier les variables du volume {{ volume.name }}
+  ansible.builtin.assert:
+    that:
+      - volume.name is defined
+      - volume.serial is defined
+      - volume.mount_point is defined
+      - volume.label is defined
+      - volume.serial | length > 0
+      - volume.mount_point | length > 1
+      - volume.label | length > 0
+    fail_msg: "La définition du volume {{ volume.name }} est invalide."
+
+- name: Rechercher le périphérique du volume {{ volume.name }}
+  ansible.builtin.set_fact:
+    filesystem_device_matches: >-
+      {{
+        filesystem_lsblk.stdout_lines
+        | select(
+            'match',
+            '^\S+\s+' ~ volume.serial ~ '$'
+          )
+        | list
+      }}
+
+- name: Vérifier que le volume {{ volume.name }} est unique
+  ansible.builtin.assert:
+    that:
+      - filesystem_device_matches | length == 1
+    fail_msg: >-
+      Le numéro de série {{ volume.serial }} doit correspondre
+      à un seul disque. Correspondances trouvées :
+      {{ filesystem_device_matches }}
+
+- name: Définir le périphérique du volume {{ volume.name }}
+  ansible.builtin.set_fact:
+    filesystem_current_device: >-
+      {{ filesystem_device_matches[0].split()[0] }}
+
+- name: Refuser l'utilisation du disque système
+  ansible.builtin.assert:
+    that:
+      - filesystem_current_device != "/dev/nvme0n1"
+    fail_msg: >-
+      Le volume {{ volume.name }} correspond au disque système.
+      L'opération est interrompue pour éviter une perte de données.
+
+- name: Examiner le filesystem existant du volume {{ volume.name }}
+  ansible.builtin.command:
+    argv:
+      - blkid
+      - -s
+      - TYPE
+      - -o
+      - value
+      - "{{ filesystem_current_device }}"
+  register: filesystem_existing_type
+  changed_when: false
+  failed_when: filesystem_existing_type.rc not in [0, 2]
+  check_mode: false
+
+- name: Vérifier le type de filesystem existant
+  ansible.builtin.assert:
+    that:
+      - (filesystem_existing_type.stdout | trim) in ["", "ext4"]
+    fail_msg: >-
+      Le volume {{ volume.name }} contient un filesystem non pris
+      en charge : {{ filesystem_existing_type.stdout | trim }}.
+      Le rôle refuse de le reformater.
+
+- name: Créer le filesystem ext4 du volume {{ volume.name }}
+  community.general.filesystem:
+    dev: "{{ filesystem_current_device }}"
+    fstype: ext4
+    opts: "-L {{ volume.label }}"
+    force: false
+
+- name: Créer le point de montage {{ volume.mount_point }}
+  ansible.builtin.file:
+    path: "{{ volume.mount_point }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Monter le volume {{ volume.name }}
+  ansible.posix.mount:
+    path: "{{ volume.mount_point }}"
+    src: "LABEL={{ volume.label }}"
+    fstype: ext4
+    opts: defaults,nofail
+    dump: "0"
+    passno: "2"
+    state: mounted
+  notify: Recharger systemd après modification de fstab
+
+- name: Vérifier le montage {{ volume.mount_point }}
+  ansible.builtin.command:
+    argv:
+      - findmnt
+      - --mountpoint
+      - "{{ volume.mount_point }}"
+  register: filesystem_findmnt
+  changed_when: false
+  when: not ansible_check_mode

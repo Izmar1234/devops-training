@@ -1,0 +1,13 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for roles/apache
+- name: Recharger systemd et redémarrer Apache
+  ansible.builtin.systemd_service:
+    name: "{{ apache_service_name }}"
+    daemon_reload: true
+    state: restarted
+
+- name: Recharger Apache
+  ansible.builtin.systemd_service:
+    name: "{{ apache_service_name }}"
+    state: reloaded

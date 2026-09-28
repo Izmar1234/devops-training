@@ -1,0 +1,11 @@
+---
+front_filesystems:
+  - name: web
+    serial: vol04fb977f182eb8bfa
+    mount_point: /var/www
+    label: web_data
+
+  - name: logs
+    serial: vol06a29640b4f90152e
+    mount_point: /var/log/apache2
+    label: apache_logs

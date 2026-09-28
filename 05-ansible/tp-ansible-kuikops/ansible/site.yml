@@ -1,0 +1,37 @@
+---
+- name: Configurer les serveurs Front
+  hosts: fronts
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: ssh_keys
+    - role: filesystems
+    - role: apache
+    - role: logrotate
+
+- name: Configurer le serveur de base de données GLPI
+  hosts: glpi_db
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: mariadb
+
+- name: Configurer le serveur applicatif GLPI
+  hosts: glpi_app
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: glpi
+
+- name: Configurer le serveur Jenkins
+  hosts: jenkins
+  become: true
+  gather_facts: true
+  tags:
+    - jenkins
+
+  roles:
+    - role: jenkins

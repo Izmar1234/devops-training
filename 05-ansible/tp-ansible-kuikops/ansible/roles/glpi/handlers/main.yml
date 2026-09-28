@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for roles/glpi
+- name: Recharger Apache
+  ansible.builtin.service:
+    name: apache2
+    state: reloaded
+  listen: Recharger Apache
+
+- name: Redémarrer Apache
+  ansible.builtin.service:
+    name: apache2
+    state: restarted
+  listen: Redémarrer Apache
