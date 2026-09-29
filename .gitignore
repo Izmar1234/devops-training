@@ -16,7 +16,8 @@ terraform.tfvars
 *.auto.tfvars
 
 # Ansible Vault et mots de passe
-ansible/group_vars/all/vault.yml
+# Secrets Ansible Vault
+**/group_vars/all/vault.yml
 *.vault_pass
 .vault_password
 
