@@ -26,7 +26,7 @@ L’infrastructure est déployée dans la région AWS de Paris (`eu-west-3`).
 Le schéma suivant présente les composants, les flux réseau, les règles de
 sécurité et les emplacements des logs :
 
-![Architecture technique GLPI sur AWS](docs/archi.png)
+![Architecture technique GLPI sur AWS](../docs/archi.png)
 
 L’infrastructure est déployée dans la région AWS de Paris :
 
