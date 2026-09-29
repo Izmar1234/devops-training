@@ -1,32 +1,35 @@
-# Répertoire de travail Terraform
-**/.terraform/
-
-# États Terraform
+# Terraform
+**/.terraform/*
 *.tfstate
 *.tfstate.*
-
-# Plans Terraform
 *.tfplan
 tfplan
-
-# Journaux d'erreur
+.terraform.lock.hcl.crash
 crash.log
-crash.*.log
-
-# Surcharges locales
 override.tf
 override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Fichiers contenant des secrets
-secrets.tfvars
-*.secret.tfvars
+# Variables locales ou sensibles
+terraform.tfvars
+*.auto.tfvars
 
-# Clés privées
+# Ansible Vault et mots de passe
+ansible/group_vars/all/vault.yml
+*.vault_pass
+.vault_password
+
+# Clés SSH
 *.pem
 *.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
 
-# Cache et fichiers temporaires
-*.retry
+# Éditeur et système
+.vscode/
+.idea/
+*.swp
 .DS_Store
