@@ -1,0 +1,32 @@
+# Répertoire de travail Terraform
+**/.terraform/
+
+# États Terraform
+*.tfstate
+*.tfstate.*
+
+# Plans Terraform
+*.tfplan
+tfplan
+
+# Journaux d'erreur
+crash.log
+crash.*.log
+
+# Surcharges locales
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Fichiers contenant des secrets
+secrets.tfvars
+*.secret.tfvars
+
+# Clés privées
+*.pem
+*.key
+
+# Cache et fichiers temporaires
+*.retry
+.DS_Store
