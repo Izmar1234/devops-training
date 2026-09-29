@@ -1,16 +1,35 @@
-.terraform/
-
+# Terraform
+**/.terraform/*
 *.tfstate
 *.tfstate.*
 *.tfplan
-tfplan-*
-
-*.tfvars
-!terraform.tfvars.example
-
-lambda/*.zip
-__pycache__/
-*.pyc
-
+tfplan
+.terraform.lock.hcl.crash
 crash.log
-crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Variables locales ou sensibles
+terraform.tfvars
+*.auto.tfvars
+
+# Ansible Vault et mots de passe
+ansible/group_vars/all/vault.yml
+*.vault_pass
+.vault_password
+
+# Clés SSH
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# Éditeur et système
+.vscode/
+.idea/
+*.swp
+.DS_Store
