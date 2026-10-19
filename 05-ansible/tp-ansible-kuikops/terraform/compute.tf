@@ -45,6 +45,10 @@ resource "aws_instance" "front_01" {
     Name = "${var.name_prefix}-front-01"
     Role = "front"
   }
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_instance" "front_02" {
@@ -116,6 +120,9 @@ resource "aws_instance" "glpi_app" {
   tags = {
     Name = "${var.name_prefix}-glpi-app"
     Role = "glpi-app"
+  }
+    lifecycle {
+    prevent_destroy = true
   }
 }
 

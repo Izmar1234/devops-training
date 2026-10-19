@@ -1,0 +1,72 @@
+postgres:
+  image:
+    repository: postgres
+    tag: "16.15-alpine"
+
+  database: kanban
+  username: kanban
+  existingSecret: kanban-postgres-secret
+
+  persistence:
+    storageClass: kanban-local
+    size: 1Gi
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+backend:
+  image:
+    repository: wkrzywiec/kanban-app
+    tag: "k8s"
+
+  replicaCount: 1
+  javaToolOptions: "-Xms128m -Xmx384m"
+
+  resources:
+    requests:
+      cpu: 200m
+      memory: 384Mi
+    limits:
+      cpu: "1"
+      memory: 768Mi
+
+frontend:
+  image:
+    repository: wkrzywiec/kanban-ui
+    tag: "k8s"
+
+  replicaCount: 1
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+adminer:
+  enabled: true
+
+  image:
+    repository: adminer
+    tag: "5.5.1-standalone"
+
+  replicaCount: 1
+
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 250m
+      memory: 128Mi
+
+ingress:
+  enabled: true
+  className: traefik

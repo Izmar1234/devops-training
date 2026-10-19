@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminer
+  namespace: kanban
+  labels:
+    app.kubernetes.io/part-of: kanban
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adminer
+  template:
+    metadata:
+      labels:
+        app: adminer
+        app.kubernetes.io/part-of: kanban
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: adminer
+          image: adminer:4.7.6-standalone
+          imagePullPolicy: IfNotPresent
+          command:
+            - php
+          args:
+            - "-d"
+            - "session.save_path=/tmp"
+            - "-d"
+            - "memory_limit=96M"
+            - "-S"
+            - "0.0.0.0:8080"
+            - "-t"
+            - "/var/www/html"
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ADMINER_DEFAULT_SERVER
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: DB_SERVER
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 12
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 10
+            timeoutSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            periodSeconds: 20
+            timeoutSeconds: 3
+            failureThreshold: 3
+          volumeMounts:
+            - name: temporary-files
+              mountPath: /tmp
+      volumes:
+        - name: temporary-files
+          emptyDir:
+            sizeLimit: 32Mi

@@ -1,0 +1,21 @@
+---
+jenkins_worker_user: jenkins
+jenkins_worker_group: jenkins
+jenkins_worker_home: /home/jenkins
+jenkins_worker_agent_dir: /home/jenkins/agent
+
+# Chemin de la clé publique sur l'ordinateur qui exécute Ansible.
+jenkins_worker_public_key_file: /home/spltr/.ssh/jenkins_front02.pub
+
+jenkins_worker_packages:
+  - openjdk-21-jre-headless
+  - git
+  - unzip
+  - ca-certificates
+  - acl
+
+jenkins_worker_terraform_version: "1.16.1"
+jenkins_worker_terraform_archive: "terraform_{{ jenkins_worker_terraform_version }}_linux_amd64.zip"
+jenkins_worker_terraform_release_url: "https://releases.hashicorp.com/terraform/{{ jenkins_worker_terraform_version }}"
+jenkins_worker_terraform_install_dir: "/opt/terraform/{{ jenkins_worker_terraform_version }}"
+jenkins_worker_cache_dir: /var/cache/jenkins-worker

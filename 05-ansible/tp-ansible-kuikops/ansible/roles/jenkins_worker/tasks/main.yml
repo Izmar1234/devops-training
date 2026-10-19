@@ -1,0 +1,122 @@
+---
+- name: Vérifier le système et la clé publique
+  ansible.builtin.assert:
+    that:
+      - ansible_facts['distribution'] == "Ubuntu"
+      - ansible_facts['architecture'] == "x86_64"
+      - lookup('ansible.builtin.file', jenkins_worker_public_key_file) | trim | length > 0
+    fail_msg: >-
+      Le worker doit être sous Ubuntu x86_64 et la clé publique
+      doit être disponible sur l'ordinateur qui exécute Ansible.
+
+- name: Installer Java et les outils du worker
+  ansible.builtin.apt:
+    name: "{{ jenkins_worker_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Créer le groupe Jenkins
+  ansible.builtin.group:
+    name: "{{ jenkins_worker_group }}"
+    state: present
+
+- name: Créer le compte Linux Jenkins
+  ansible.builtin.user:
+    name: "{{ jenkins_worker_user }}"
+    group: "{{ jenkins_worker_group }}"
+    home: "{{ jenkins_worker_home }}"
+    shell: /bin/bash
+    create_home: true
+    system: true
+    state: present
+
+- name: Préparer les répertoires de l'agent
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ jenkins_worker_user }}"
+    group: "{{ jenkins_worker_group }}"
+    mode: "0750"
+  loop:
+    - "{{ jenkins_worker_home }}"
+    - "{{ jenkins_worker_agent_dir }}"
+
+- name: Autoriser la clé publique dédiée à Jenkins
+  ansible.posix.authorized_key:
+    user: "{{ jenkins_worker_user }}"
+    key: "{{ lookup('ansible.builtin.file', jenkins_worker_public_key_file) }}"
+    state: present
+    manage_dir: true
+    exclusive: false
+
+- name: Préparer les répertoires de Terraform
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  loop:
+    - "{{ jenkins_worker_cache_dir }}"
+    - "{{ jenkins_worker_terraform_install_dir }}"
+
+- name: Télécharger Terraform et vérifier son SHA256
+  ansible.builtin.get_url:
+    url: "{{ jenkins_worker_terraform_release_url }}/{{ jenkins_worker_terraform_archive }}"
+    dest: "{{ jenkins_worker_cache_dir }}/{{ jenkins_worker_terraform_archive }}"
+    checksum: "sha256:{{ jenkins_worker_terraform_release_url }}/terraform_{{ jenkins_worker_terraform_version }}_SHA256SUMS"
+    owner: root
+    group: root
+    mode: "0644"
+    timeout: 60
+
+- name: Extraire Terraform
+  ansible.builtin.unarchive:
+    src: "{{ jenkins_worker_cache_dir }}/{{ jenkins_worker_terraform_archive }}"
+    dest: "{{ jenkins_worker_terraform_install_dir }}"
+    remote_src: true
+    creates: "{{ jenkins_worker_terraform_install_dir }}/terraform"
+    owner: root
+    group: root
+
+- name: Définir les permissions du binaire Terraform
+  ansible.builtin.file:
+    path: "{{ jenkins_worker_terraform_install_dir }}/terraform"
+    state: file
+    owner: root
+    group: root
+    mode: "0755"
+
+- name: Rendre Terraform disponible dans le PATH
+  ansible.builtin.file:
+    src: "{{ jenkins_worker_terraform_install_dir }}/terraform"
+    dest: /usr/local/bin/terraform
+    state: link
+
+- name: Vérifier Java avec le compte Jenkins
+  ansible.builtin.command:
+    cmd: java -version
+  become_user: "{{ jenkins_worker_user }}"
+  register: jenkins_worker_java_result
+  changed_when: false
+
+- name: Vérifier Terraform avec le compte Jenkins
+  ansible.builtin.command:
+    cmd: /usr/local/bin/terraform version -json
+  become_user: "{{ jenkins_worker_user }}"
+  register: jenkins_worker_terraform_result
+  changed_when: false
+
+- name: Vérifier la version de Terraform installée
+  ansible.builtin.assert:
+    that:
+      - (jenkins_worker_terraform_result.stdout | from_json)['terraform_version'] == jenkins_worker_terraform_version
+    fail_msg: La version de Terraform installée ne correspond pas à la version demandée.
+
+- name: Afficher les versions du worker
+  ansible.builtin.debug:
+    msg:
+      - "{{ jenkins_worker_java_result.stderr }}"
+      - "Terraform : {{ (jenkins_worker_terraform_result.stdout | from_json)['terraform_version'] }}"
+      - "Répertoire de l'agent : {{ jenkins_worker_agent_dir }}"

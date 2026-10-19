@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: kanban-postgres-pv
+  labels:
+    app.kubernetes.io/part-of: kanban
+
+spec:
+  capacity:
+    storage: 1Gi
+
+  volumeMode: Filesystem
+
+  accessModes:
+    - ReadWriteOnce
+
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: kanban-local
+
+  local:
+    path: /data/kanban/postgres
+
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - kanban-m02

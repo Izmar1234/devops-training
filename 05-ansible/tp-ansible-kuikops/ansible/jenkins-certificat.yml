@@ -1,0 +1,63 @@
+---
+- name: Obtenir le certificat HTTPS du controleur Jenkins
+  hosts: jenkins
+  become: true
+  gather_facts: false
+
+  vars_prompt:
+    - name: letsencrypt_email
+      prompt: "Adresse email pour le compte Let’s Encrypt"
+      private: false
+
+  tasks:
+    - name: Installer les dependances Python
+      ansible.builtin.apt:
+        name:
+          - python3-pip
+          - python3-venv
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Installer Certbot dans un environnement Python isole
+      ansible.builtin.pip:
+        name: "certbot>=5.4.0,<6.0.0"
+        virtualenv: /opt/certbot
+        virtualenv_command: /usr/bin/python3 -m venv
+
+    - name: Lire le DocumentRoot du site Apache
+      ansible.builtin.command:
+        argv:
+          - awk
+          - '$1 == "DocumentRoot" { gsub(/"/, "", $2); print $2; exit }'
+          - /etc/apache2/sites-enabled/000-default.conf
+      register: jenkins_webroot
+      changed_when: false
+
+    - name: Verifier le chemin du site Apache
+      ansible.builtin.assert:
+        that:
+          - jenkins_webroot.stdout | length > 0
+          - jenkins_webroot.stdout.startswith('/')
+        fail_msg: "Impossible de trouver le DocumentRoot du site Apache."
+
+    - name: Obtenir le certificat pour l IP publique actuelle
+      ansible.builtin.command:
+        cmd: >-
+          /opt/certbot/bin/certbot certonly
+          --non-interactive
+          --agree-tos
+          --email {{ letsencrypt_email | quote }}
+          --webroot
+          --webroot-path {{ jenkins_webroot.stdout | trim | quote }}
+          --ip-address {{ ansible_host | quote }}
+          --preferred-profile shortlived
+          --cert-name jenkins-ip
+          --keep-until-expiring
+          --renew-with-new-domains
+      register: jenkins_certificat
+      changed_when: "'Successfully received certificate' in jenkins_certificat.stdout"
+
+    - name: Afficher le resultat
+      ansible.builtin.debug:
+        var: jenkins_certificat.stdout_lines

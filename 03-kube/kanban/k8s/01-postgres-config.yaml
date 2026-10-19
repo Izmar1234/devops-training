@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: postgres-config
+  namespace: kanban
+  labels:
+    app.kubernetes.io/part-of: kanban
+
+data:
+  POSTGRES_DB: "kanban"
+  POSTGRES_USER: "kanban"
+  DB_SERVER: "postgres"

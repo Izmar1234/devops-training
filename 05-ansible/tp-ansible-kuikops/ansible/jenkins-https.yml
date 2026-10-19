@@ -1,0 +1,127 @@
+---
+- name: Configurer le webhook Jenkins en HTTPS
+  hosts: jenkins
+  become: true
+  gather_facts: false
+
+  vars:
+    jenkins_job_name: test-gitlab-checkout
+
+  tasks:
+    - name: Activer les modules Apache necessaires
+      ansible.builtin.command:
+        cmd: "a2enmod {{ item }}"
+        creates: "/etc/apache2/mods-enabled/{{ item }}.load"
+      loop:
+        - ssl
+        - proxy
+        - proxy_http
+        - headers
+
+    - name: Configurer l ecoute HTTPS
+      ansible.builtin.lineinfile:
+        path: /etc/apache2/ports.conf
+        regexp: '^\s*Listen\s+443(\s|$)'
+        line: "Listen 443"
+
+    - name: Creer le site HTTPS du webhook
+      ansible.builtin.copy:
+        dest: /etc/apache2/sites-available/jenkins-webhook.conf
+        owner: root
+        group: root
+        mode: "0644"
+        content: |
+          <VirtualHost *:443>
+              ServerName {{ ansible_host }}
+
+              SSLEngine on
+              SSLProtocol -all +TLSv1.2 +TLSv1.3
+              SSLCertificateFile /etc/letsencrypt/live/jenkins-ip/fullchain.pem
+              SSLCertificateKeyFile /etc/letsencrypt/live/jenkins-ip/privkey.pem
+
+              ProxyRequests Off
+              ProxyPreserveHost On
+              RequestHeader set X-Forwarded-Proto "https"
+
+              <Location "/">
+                  Require all denied
+              </Location>
+
+              <LocationMatch "^/project/{{ jenkins_job_name }}$">
+                  Require all granted
+              </LocationMatch>
+
+              ProxyPass "/project/{{ jenkins_job_name }}" "http://127.0.0.1:8080/project/{{ jenkins_job_name }}"
+              ProxyPassReverse "/project/{{ jenkins_job_name }}" "http://127.0.0.1:8080/project/{{ jenkins_job_name }}"
+
+              ErrorLog ${APACHE_LOG_DIR}/jenkins-webhook-error.log
+              CustomLog ${APACHE_LOG_DIR}/jenkins-webhook-access.log combined
+          </VirtualHost>
+
+    - name: Activer le site HTTPS
+      ansible.builtin.file:
+        src: /etc/apache2/sites-available/jenkins-webhook.conf
+        dest: /etc/apache2/sites-enabled/jenkins-webhook.conf
+        state: link
+
+    - name: Verifier la configuration Apache
+      ansible.builtin.command:
+        cmd: apache2ctl configtest
+      changed_when: false
+
+    - name: Recharger Apache
+      ansible.builtin.service:
+        name: apache2
+        state: reloaded
+
+    - name: Verifier l ecoute locale sur 443
+      ansible.builtin.wait_for:
+        host: 127.0.0.1
+        port: 443
+        timeout: 15
+
+    - name: Installer cron
+      ansible.builtin.apt:
+        name: cron
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Activer cron
+      ansible.builtin.service:
+        name: cron
+        state: started
+        enabled: true
+
+    - name: Creer le dossier des hooks de renouvellement
+      ansible.builtin.file:
+        path: /etc/letsencrypt/renewal-hooks/deploy
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Recharger Apache apres renouvellement du certificat
+      ansible.builtin.copy:
+        dest: /etc/letsencrypt/renewal-hooks/deploy/reload-apache.sh
+        owner: root
+        group: root
+        mode: "0750"
+        content: |
+          #!/bin/sh
+          set -eu
+          /usr/sbin/apache2ctl configtest
+          /usr/bin/systemctl reload apache2
+
+    - name: Planifier la verification du certificat deux fois par jour
+      ansible.builtin.cron:
+        name: Renouvellement du certificat Jenkins
+        user: root
+        minute: "23"
+        hour: "0,12"
+        job: "/opt/certbot/bin/certbot renew --quiet --cert-name jenkins-ip >> /var/log/jenkins-certbot-renew.log 2>&1"
+
+    - name: Tester le renouvellement et le rechargement Apache
+      ansible.builtin.command:
+        cmd: /opt/certbot/bin/certbot renew --cert-name jenkins-ip --dry-run --run-deploy-hooks
+      changed_when: false

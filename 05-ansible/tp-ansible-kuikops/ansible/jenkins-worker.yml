@@ -1,0 +1,8 @@
+---
+- name: Préparer le worker Jenkins
+  hosts: jenkins_worker
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: jenkins_worker

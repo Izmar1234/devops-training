@@ -129,3 +129,14 @@ resource "aws_vpc_security_group_egress_rule" "glpi_db_all_outbound" {
   ip_protocol = "-1"
   cidr_ipv4   = "0.0.0.0/0"
 }
+
+resource "aws_vpc_security_group_ingress_rule" "fronts_ssh_from_jenkins_controller" {
+  security_group_id = aws_security_group.fronts.id
+  description       = "SSH depuis les instances du groupe Jenkins"
+
+  ip_protocol = "tcp"
+  from_port   = 22
+  to_port     = 22
+
+  referenced_security_group_id = aws_security_group.jenkins.id
+  }

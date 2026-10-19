@@ -1,0 +1,835 @@
+
+==> Audit <==
+┌─────────┬───────────────────────────────────────────────────────────────────────────────────────────────────────────┬─────────────┬───────┬─────────┬──────────────────────┬──────────────────────┐
+│ COMMAND │                                                   ARGS                                                    │   PROFILE   │ USER  │ VERSION │      START TIME      │       END TIME       │
+├─────────┼───────────────────────────────────────────────────────────────────────────────────────────────────────────┼─────────────┼───────┼─────────┼──────────────────────┼──────────────────────┤
+│ delete  │ --profile minikube                                                                                        │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:03 CEST │ 04 May 26 22:03 CEST │
+│ start   │ --driver=docker                                                                                           │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:04 CEST │ 04 May 26 22:05 CEST │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:05 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:12 CEST │                      │
+│ node    │ add                                                                                                       │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:15 CEST │ 04 May 26 22:16 CEST │
+│ ssh     │ -n minikube-m02                                                                                           │ minikube    │ spltr │ v1.37.0 │ 04 May 26 22:17 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 04 May 26 23:32 CEST │                      │
+│ stop    │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 05 May 26 01:09 CEST │ 05 May 26 01:10 CEST │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 05 May 26 01:10 CEST │ 05 May 26 01:10 CEST │
+│ start   │ --nodes=2                                                                                                 │ minikube    │ spltr │ v1.37.0 │ 05 May 26 01:10 CEST │ 05 May 26 01:11 CEST │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 05 May 26 01:12 CEST │                      │
+│ image   │ pull kong:3.9                                                                                             │ minikube    │ spltr │ v1.37.0 │ 06 May 26 00:01 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 06 May 26 00:02 CEST │                      │
+│ image   │ pull kong:3.9                                                                                             │ minikube    │ spltr │ v1.37.0 │ 06 May 26 00:05 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 07 May 26 21:58 CEST │ 09 May 26 01:23 CEST │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 08 May 26 14:42 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 08 May 26 14:52 CEST │ 08 May 26 14:53 CEST │
+│ ssh     │ -n minikube-m02                                                                                           │ minikube    │ spltr │ v1.37.0 │ 09 May 26 22:26 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 09 May 26 23:51 CEST │                      │
+│ ssh     │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 09 May 26 23:53 CEST │                      │
+│ start   │ --nodes 3                                                                                                 │ minikube    │ spltr │ v1.37.0 │ 22 May 26 17:22 CEST │ 22 May 26 17:22 CEST │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 22 May 26 17:25 CEST │ 22 May 26 17:25 CEST │
+│ start   │ --nodes 3                                                                                                 │ minikube    │ spltr │ v1.37.0 │ 22 May 26 17:25 CEST │                      │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 22 May 26 17:28 CEST │ 22 May 26 17:28 CEST │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker                                                                  │ secure-cicd │ spltr │ v1.37.0 │ 22 May 26 17:29 CEST │ 22 May 26 17:31 CEST │
+│ addons  │ enable ingress -p secure-cicd                                                                             │ secure-cicd │ spltr │ v1.37.0 │ 22 May 26 17:51 CEST │ 22 May 26 17:56 CEST │
+│ addons  │ enable metrics-server -p secure-cicd                                                                      │ secure-cicd │ spltr │ v1.37.0 │ 22 May 26 17:58 CEST │ 22 May 26 17:58 CEST │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 22 May 26 19:28 CEST │ 22 May 26 19:28 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 22 May 26 19:29 CEST │ 22 May 26 19:29 CEST │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 23 May 26 18:45 CEST │                      │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 23 May 26 18:46 CEST │ 23 May 26 18:48 CEST │
+│ addons  │ enable ingress -p secure-cicd                                                                             │ secure-cicd │ spltr │ v1.37.0 │ 23 May 26 19:03 CEST │ 23 May 26 19:06 CEST │
+│ addons  │ enable metrics-server -p secure-cicd                                                                      │ secure-cicd │ spltr │ v1.37.0 │ 23 May 26 19:24 CEST │ 23 May 26 19:24 CEST │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 28 May 26 12:48 CEST │ 28 May 26 12:48 CEST │
+│ delete  │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 28 May 26 12:52 CEST │ 28 May 26 12:52 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 12:53 CEST │ 28 May 26 12:53 CEST │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:13 CEST │                      │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:16 CEST │                      │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:18 CEST │ 28 May 26 16:18 CEST │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:18 CEST │ 28 May 26 16:20 CEST │
+│ addons  │ enable ingress -p secure-cicd                                                                             │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:34 CEST │ 28 May 26 16:36 CEST │
+│ addons  │ enable metrics-server -p secure-cicd                                                                      │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:37 CEST │ 28 May 26 16:37 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:48 CEST │                      │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:48 CEST │ 28 May 26 16:48 CEST │
+│ start   │ -p secure-cicd --nodes 3 --driver=docker --cni=calico                                                     │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:48 CEST │ 28 May 26 16:50 CEST │
+│ addons  │ enable ingress -p secure-cicd                                                                             │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:50 CEST │ 28 May 26 16:55 CEST │
+│ addons  │ enable metrics-server -p secure-cicd                                                                      │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 16:56 CEST │ 28 May 26 16:56 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 19:39 CEST │ 28 May 26 19:39 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 28 May 26 19:59 CEST │ 28 May 26 19:59 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 15:46 CEST │ 29 May 26 15:46 CEST │
+│ start   │ -p secure-cicd --nodes=3 --driver=docker --cni=calico --kubernetes-version=v1.33.5 --cpus=2 --memory=4096 │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 15:46 CEST │                      │
+│ start   │ -p secure-cicd --nodes=3 --driver=docker --cni=calico --kubernetes-version=v1.33.5 --cpus=2 --memory=3713 │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 15:46 CEST │ 29 May 26 15:58 CEST │
+│ addons  │ enable ingress -p secure-cicd                                                                             │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 15:59 CEST │ 29 May 26 16:04 CEST │
+│ addons  │ enable metrics-server -p secure-cicd                                                                      │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 16:04 CEST │ 29 May 26 16:04 CEST │
+│ delete  │ -p secure-cicd                                                                                            │ secure-cicd │ spltr │ v1.37.0 │ 29 May 26 21:00 CEST │ 29 May 26 21:01 CEST │
+│ start   │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 23 Sep 26 13:30 CEST │ 23 Sep 26 13:31 CEST │
+│ stop    │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 23 Sep 26 13:44 CEST │ 23 Sep 26 13:44 CEST │
+│ start   │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 06 Oct 26 14:46 CEST │ 06 Oct 26 14:47 CEST │
+│ stop    │                                                                                                           │ minikube    │ spltr │ v1.37.0 │ 06 Oct 26 14:49 CEST │ 06 Oct 26 14:50 CEST │
+│ start   │ --profile=kanban --driver=kvm2 --nodes=2 --cpus=2 --memory=2048 --container-runtime=containerd            │ kanban      │ spltr │ v1.37.0 │ 06 Oct 26 14:59 CEST │                      │
+└─────────┴───────────────────────────────────────────────────────────────────────────────────────────────────────────┴─────────────┴───────┴─────────┴──────────────────────┴──────────────────────┘
+
+
+==> Last Start <==
+Log file created at: 2026/10/06 14:59:04
+Running on machine: spltr-ASUS-Vivobook-15-X1504VAPF-X1504VA
+Binary: Built with gc go1.24.6 for linux/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1006 14:59:04.647903   92759 out.go:360] Setting OutFile to fd 1 ...
+I1006 14:59:04.648404   92759 out.go:413] isatty.IsTerminal(1) = true
+I1006 14:59:04.648411   92759 out.go:374] Setting ErrFile to fd 2...
+I1006 14:59:04.648419   92759 out.go:413] isatty.IsTerminal(2) = true
+I1006 14:59:04.648789   92759 root.go:338] Updating PATH: /home/spltr/.minikube/bin
+I1006 14:59:04.649812   92759 out.go:368] Setting JSON to false
+I1006 14:59:04.653096   92759 start.go:130] hostinfo: {"hostname":"spltr-ASUS-Vivobook-15-X1504VAPF-X1504VA","uptime":141804,"bootTime":1791149741,"procs":414,"os":"linux","platform":"ubuntu","platformFamily":"debian","platformVersion":"24.04","kernelVersion":"7.0.0-34-generic","kernelArch":"x86_64","virtualizationSystem":"kvm","virtualizationRole":"host","hostId":"ee1909d4-ed86-47f0-965c-18d588badc06"}
+I1006 14:59:04.653242   92759 start.go:140] virtualization: kvm host
+I1006 14:59:04.654504   92759 out.go:179] 😄  [kanban] minikube v1.37.0 on Ubuntu 24.04
+I1006 14:59:04.655804   92759 notify.go:220] Checking for updates...
+I1006 14:59:04.656548   92759 config.go:182] Loaded profile config "minikube": Driver=kvm2, ContainerRuntime=docker, KubernetesVersion=v1.34.0
+I1006 14:59:04.656711   92759 driver.go:421] Setting default libvirt URI to qemu:///system
+I1006 14:59:05.514580   92759 out.go:179] ✨  Using the kvm2 driver based on user configuration
+I1006 14:59:05.515333   92759 start.go:304] selected driver: kvm2
+I1006 14:59:05.515347   92759 start.go:918] validating driver "kvm2" against <nil>
+I1006 14:59:05.515368   92759 start.go:929] status for kvm2: {Installed:true Healthy:true Running:true NeedsImprovement:false Error:<nil> Reason: Fix: Doc: Version:}
+I1006 14:59:05.518290   92759 install.go:52] acquiring lock: {Name:mk900956b073697a4aa6c80a27c6bb0742a99a53 Clock:{} Delay:500ms Timeout:10m0s Cancel:<nil>}
+I1006 14:59:05.518484   92759 install.go:117] Validating docker-machine-driver-kvm2, PATH=/home/spltr/.minikube/bin:/usr/local/go/bin:/home/spltr/.local/bin:/home/spltr/.nix-profile/bin:/nix/var/nix/profiles/default/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/spltr/.local/bin:/home/spltr/.local/bin
+I1006 14:59:05.543803   92759 install.go:137] /home/spltr/.minikube/bin/docker-machine-driver-kvm2 version is 1.37.0
+I1006 14:59:05.543872   92759 start_flags.go:327] no existing cluster config was found, will generate one from the flags 
+I1006 14:59:05.545582   92759 start_flags.go:974] Wait components to verify : map[apiserver:true system_pods:true]
+I1006 14:59:05.545660   92759 cni.go:84] Creating CNI manager for ""
+I1006 14:59:05.545774   92759 cni.go:136] multinode detected (0 nodes found), recommending kindnet
+I1006 14:59:05.545787   92759 start_flags.go:336] Found "CNI" CNI - setting NetworkPlugin=cni
+I1006 14:59:05.545898   92759 start.go:348] cluster config:
+{Name:kanban KeepContext:false EmbedCerts:false MinikubeISO: KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.48@sha256:7171c97a51623558720f8e5878e4f4637da093e2f2ed589997bedc6c1549b2b1 Memory:2048 CPUs:2 DiskSize:20000 Driver:kvm2 HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 APIServerPort:8443 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.34.0 ClusterName:kanban Namespace:default APIServerHAVIP: APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:containerd CRISocket: NetworkPlugin:cni FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: RegistryAliases: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI:} Nodes:[{Name: IP: Port:8443 KubernetesVersion:v1.34.0 ContainerRuntime:containerd ControlPlane:true Worker:true}] Addons:map[] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: Subnet: MultiNodeRequested:true ExtraDisks:0 CertExpiration:26280h0m0s MountString: Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false DisableMetrics:false DisableCoreDNSLog:false CustomQemuFirmwarePath: SocketVMnetClientPath: SocketVMnetPath: StaticIP: SSHAuthSock: SSHAgentPID:0 GPUs: AutoPauseInterval:1m0s}
+I1006 14:59:05.546367   92759 iso.go:125] acquiring lock: {Name:mk513f87db36a1ed3b28dc61af0c02feb63a16d1 Clock:{} Delay:500ms Timeout:10m0s Cancel:<nil>}
+I1006 14:59:05.547638   92759 out.go:179] 👍  Starting "kanban" primary control-plane node in "kanban" cluster
+I1006 14:59:05.548115   92759 preload.go:131] Checking if preload exists for k8s version v1.34.0 and runtime containerd
+I1006 14:59:05.671037   92759 preload.go:118] Found remote preload: https://storage.googleapis.com/minikube-preloaded-volume-tarballs/v18/v1.34.0/preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4
+I1006 14:59:05.671067   92759 cache.go:58] Caching tarball of preloaded images
+I1006 14:59:05.671465   92759 preload.go:131] Checking if preload exists for k8s version v1.34.0 and runtime containerd
+I1006 14:59:05.674405   92759 out.go:179] 💾  Downloading Kubernetes v1.34.0 preload ...
+I1006 14:59:05.675044   92759 preload.go:236] getting checksum for preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4 ...
+I1006 14:59:05.827588   92759 download.go:108] Downloading: https://storage.googleapis.com/minikube-preloaded-volume-tarballs/v18/v1.34.0/preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4?checksum=md5:2b7b36e7513c2e517ecf49b6f3ce02cf -> /home/spltr/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4
+I1006 14:59:30.183213   92759 preload.go:247] saving checksum for preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4 ...
+I1006 14:59:30.183298   92759 preload.go:254] verifying checksum of /home/spltr/.minikube/cache/preloaded-tarball/preloaded-images-k8s-v18-v1.34.0-containerd-overlay2-amd64.tar.lz4 ...
+I1006 14:59:31.273672   92759 cache.go:61] Finished verifying existence of preloaded tar for v1.34.0 on containerd
+I1006 14:59:31.273792   92759 profile.go:143] Saving config to /home/spltr/.minikube/profiles/kanban/config.json ...
+I1006 14:59:31.273811   92759 lock.go:35] WriteFile acquiring /home/spltr/.minikube/profiles/kanban/config.json: {Name:mkde6e5e8fac8b7f633c866bd11dda632f1af202 Clock:{} Delay:500ms Timeout:1m0s Cancel:<nil>}
+I1006 14:59:31.273984   92759 start.go:360] acquireMachinesLock for kanban: {Name:mk55144dccc0f28aaa12781584cee3e6816c8ec3 Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I1006 14:59:31.274016   92759 start.go:364] duration metric: took 23.161µs to acquireMachinesLock for "kanban"
+I1006 14:59:31.276125   92759 start.go:93] Provisioning new machine with config: &{Name:kanban KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.37.0-amd64.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.48@sha256:7171c97a51623558720f8e5878e4f4637da093e2f2ed589997bedc6c1549b2b1 Memory:2048 CPUs:2 DiskSize:20000 Driver:kvm2 HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 APIServerPort:8443 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.34.0 ClusterName:kanban Namespace:default APIServerHAVIP: APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:containerd CRISocket: NetworkPlugin:cni FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: RegistryAliases: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI:} Nodes:[{Name: IP: Port:8443 KubernetesVersion:v1.34.0 ContainerRuntime:containerd ControlPlane:true Worker:true}] Addons:map[] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: Subnet: MultiNodeRequested:true ExtraDisks:0 CertExpiration:26280h0m0s MountString: Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false DisableMetrics:false DisableCoreDNSLog:false CustomQemuFirmwarePath: SocketVMnetClientPath: SocketVMnetPath: StaticIP: SSHAuthSock: SSHAgentPID:0 GPUs: AutoPauseInterval:1m0s} &{Name: IP: Port:8443 KubernetesVersion:v1.34.0 ContainerRuntime:containerd ControlPlane:true Worker:true}
+I1006 14:59:31.276189   92759 start.go:125] createHost starting for "" (driver="kvm2")
+I1006 14:59:31.277332   92759 out.go:252] 🔥  Creating kvm2 VM (CPUs=2, Memory=2048MB, Disk=20000MB) ...
+I1006 14:59:31.277487   92759 main.go:141] libmachine: Found binary path at /home/spltr/.minikube/bin/docker-machine-driver-kvm2
+I1006 14:59:31.277526   92759 main.go:141] libmachine: Launching plugin server for driver kvm2
+I1006 14:59:31.292254   92759 main.go:141] libmachine: Plugin server listening at address 127.0.0.1:34603
+I1006 14:59:31.292958   92759 main.go:141] libmachine: () Calling .GetVersion
+I1006 14:59:31.293660   92759 main.go:141] libmachine: Using API Version  1
+I1006 14:59:31.293678   92759 main.go:141] libmachine: () Calling .SetConfigRaw
+I1006 14:59:31.294125   92759 main.go:141] libmachine: () Calling .GetMachineName
+I1006 14:59:31.294424   92759 main.go:141] libmachine: (kanban) Calling .GetMachineName
+I1006 14:59:31.294603   92759 main.go:141] libmachine: (kanban) Calling .DriverName
+I1006 14:59:31.294778   92759 start.go:159] libmachine.API.Create for "kanban" (driver="kvm2")
+I1006 14:59:31.294805   92759 client.go:168] LocalClient.Create starting
+I1006 14:59:31.295114   92759 main.go:141] libmachine: Reading certificate data from /home/spltr/.minikube/certs/ca.pem
+I1006 14:59:31.295494   92759 main.go:141] libmachine: Decoding PEM data...
+I1006 14:59:31.295515   92759 main.go:141] libmachine: Parsing certificate...
+I1006 14:59:31.295610   92759 main.go:141] libmachine: Reading certificate data from /home/spltr/.minikube/certs/cert.pem
+I1006 14:59:31.295847   92759 main.go:141] libmachine: Decoding PEM data...
+I1006 14:59:31.295865   92759 main.go:141] libmachine: Parsing certificate...
+I1006 14:59:31.295895   92759 main.go:141] libmachine: Running pre-create checks...
+I1006 14:59:31.295904   92759 main.go:141] libmachine: (kanban) Calling .PreCreateCheck
+I1006 14:59:31.296347   92759 main.go:141] libmachine: (kanban) Calling .GetConfigRaw
+I1006 14:59:31.297089   92759 main.go:141] libmachine: Creating machine...
+I1006 14:59:31.297101   92759 main.go:141] libmachine: (kanban) Calling .Create
+I1006 14:59:31.297284   92759 main.go:141] libmachine: (kanban) creating domain...
+I1006 14:59:31.297296   92759 main.go:141] libmachine: (kanban) creating network...
+I1006 14:59:31.300172   92759 main.go:141] libmachine: (kanban) DBG | found existing default network
+I1006 14:59:31.300455   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 14:59:31.300463   92759 main.go:141] libmachine: (kanban) DBG |   <name>default</name>
+I1006 14:59:31.300474   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>1fd663eb-e0eb-47c6-bbd4-aa58c28b06d2</uuid>
+I1006 14:59:31.300491   92759 main.go:141] libmachine: (kanban) DBG |   <forward mode='nat'>
+I1006 14:59:31.300501   92759 main.go:141] libmachine: (kanban) DBG |     <nat>
+I1006 14:59:31.300507   92759 main.go:141] libmachine: (kanban) DBG |       <port start='1024' end='65535'/>
+I1006 14:59:31.300514   92759 main.go:141] libmachine: (kanban) DBG |     </nat>
+I1006 14:59:31.300519   92759 main.go:141] libmachine: (kanban) DBG |   </forward>
+I1006 14:59:31.300528   92759 main.go:141] libmachine: (kanban) DBG |   <bridge name='virbr0' stp='on' delay='0'/>
+I1006 14:59:31.300536   92759 main.go:141] libmachine: (kanban) DBG |   <mac address='52:54:00:b7:d6:0b'/>
+I1006 14:59:31.300544   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.122.1' netmask='255.255.255.0'>
+I1006 14:59:31.300549   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 14:59:31.300557   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.122.2' end='192.168.122.254'/>
+I1006 14:59:31.300563   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 14:59:31.300569   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 14:59:31.300579   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 14:59:31.300607   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 14:59:31.301649   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:31.301374   92983 network.go:211] skipping subnet 192.168.39.0/24 that is taken: &{IP:192.168.39.0 Netmask:255.255.255.0 Prefix:24 CIDR:192.168.39.0/24 Gateway:192.168.39.1 ClientMin:192.168.39.2 ClientMax:192.168.39.254 Broadcast:192.168.39.255 IsPrivate:true Interface:{IfaceName:virbr1 IfaceIPv4:192.168.39.1 IfaceMTU:1500 IfaceMAC:52:54:00:35:c7:4c} reservation:<nil>}
+I1006 14:59:31.302616   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:31.302534   92983 network.go:206] using free private subnet 192.168.50.0/24: &{IP:192.168.50.0 Netmask:255.255.255.0 Prefix:24 CIDR:192.168.50.0/24 Gateway:192.168.50.1 ClientMin:192.168.50.2 ClientMax:192.168.50.254 Broadcast:192.168.50.255 IsPrivate:true Interface:{IfaceName: IfaceIPv4: IfaceMTU:0 IfaceMAC:} reservation:0xc0002d0020}
+I1006 14:59:31.302638   92759 main.go:141] libmachine: (kanban) DBG | defining private network:
+I1006 14:59:31.302646   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 14:59:31.302654   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 14:59:31.302659   92759 main.go:141] libmachine: (kanban) DBG |   <name>mk-kanban</name>
+I1006 14:59:31.302666   92759 main.go:141] libmachine: (kanban) DBG |   <dns enable='no'/>
+I1006 14:59:31.302673   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.50.1' netmask='255.255.255.0'>
+I1006 14:59:31.302680   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 14:59:31.302687   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.50.2' end='192.168.50.253'/>
+I1006 14:59:31.302695   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 14:59:31.302704   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 14:59:31.302711   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 14:59:31.302720   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 14:59:31.323372   92759 main.go:141] libmachine: (kanban) DBG | creating private network mk-kanban 192.168.50.0/24...
+I1006 14:59:31.439129   92759 main.go:141] libmachine: (kanban) DBG | private network mk-kanban 192.168.50.0/24 created
+I1006 14:59:31.439650   92759 main.go:141] libmachine: (kanban) setting up store path in /home/spltr/.minikube/machines/kanban ...
+I1006 14:59:31.439678   92759 main.go:141] libmachine: (kanban) building disk image from file:///home/spltr/.minikube/cache/iso/amd64/minikube-v1.37.0-amd64.iso
+I1006 14:59:31.439693   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 14:59:31.439715   92759 main.go:141] libmachine: (kanban) DBG |   <name>mk-kanban</name>
+I1006 14:59:31.439738   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>8c12315e-a761-40e1-8adf-9924ea66ae4b</uuid>
+I1006 14:59:31.439774   92759 main.go:141] libmachine: (kanban) DBG |   <bridge name='virbr2' stp='on' delay='0'/>
+I1006 14:59:31.439782   92759 main.go:141] libmachine: (kanban) DBG |   <mac address='52:54:00:c2:97:54'/>
+I1006 14:59:31.439792   92759 main.go:141] libmachine: (kanban) DBG |   <dns enable='no'/>
+I1006 14:59:31.439800   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.50.1' netmask='255.255.255.0'>
+I1006 14:59:31.439809   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 14:59:31.439823   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.50.2' end='192.168.50.253'/>
+I1006 14:59:31.439840   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 14:59:31.439847   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 14:59:31.439855   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 14:59:31.439861   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 14:59:31.439887   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:31.439615   92983 common.go:144] Making disk image using store path: /home/spltr/.minikube
+I1006 14:59:31.439932   92759 main.go:141] libmachine: (kanban) Downloading /home/spltr/.minikube/cache/boot2docker.iso from file:///home/spltr/.minikube/cache/iso/amd64/minikube-v1.37.0-amd64.iso...
+I1006 14:59:32.115146   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:32.115006   92983 common.go:151] Creating ssh key: /home/spltr/.minikube/machines/kanban/id_rsa...
+I1006 14:59:32.541078   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:32.540946   92983 common.go:157] Creating raw disk image: /home/spltr/.minikube/machines/kanban/kanban.rawdisk...
+I1006 14:59:32.541090   92759 main.go:141] libmachine: (kanban) DBG | Writing magic tar header
+I1006 14:59:32.541098   92759 main.go:141] libmachine: (kanban) DBG | Writing SSH key tar header
+I1006 14:59:32.541105   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:32.541064   92983 common.go:171] Fixing permissions on /home/spltr/.minikube/machines/kanban ...
+I1006 14:59:32.541154   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube/machines/kanban
+I1006 14:59:32.541168   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube/machines
+I1006 14:59:32.541172   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube
+I1006 14:59:32.541182   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube/machines/kanban (perms=drwx------)
+I1006 14:59:32.541187   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube/machines (perms=drwxr-xr-x)
+I1006 14:59:32.541195   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube (perms=drwxr-xr-x)
+I1006 14:59:32.541307   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr (perms=drwxr-x--x)
+I1006 14:59:32.541317   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr
+I1006 14:59:32.541327   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home
+I1006 14:59:32.541332   92759 main.go:141] libmachine: (kanban) DBG | skipping /home - not owner
+I1006 14:59:32.541342   92759 main.go:141] libmachine: (kanban) defining domain...
+I1006 14:59:32.544066   92759 main.go:141] libmachine: (kanban) defining domain using XML: 
+I1006 14:59:32.544096   92759 main.go:141] libmachine: (kanban) <domain type='kvm'>
+I1006 14:59:32.544108   92759 main.go:141] libmachine: (kanban)   <name>kanban</name>
+I1006 14:59:32.544117   92759 main.go:141] libmachine: (kanban)   <memory unit='MiB'>2048</memory>
+I1006 14:59:32.544132   92759 main.go:141] libmachine: (kanban)   <vcpu>2</vcpu>
+I1006 14:59:32.544138   92759 main.go:141] libmachine: (kanban)   <features>
+I1006 14:59:32.544146   92759 main.go:141] libmachine: (kanban)     <acpi/>
+I1006 14:59:32.544152   92759 main.go:141] libmachine: (kanban)     <apic/>
+I1006 14:59:32.544160   92759 main.go:141] libmachine: (kanban)     <pae/>
+I1006 14:59:32.544166   92759 main.go:141] libmachine: (kanban)   </features>
+I1006 14:59:32.544175   92759 main.go:141] libmachine: (kanban)   <cpu mode='host-passthrough'>
+I1006 14:59:32.544181   92759 main.go:141] libmachine: (kanban)   </cpu>
+I1006 14:59:32.544188   92759 main.go:141] libmachine: (kanban)   <os>
+I1006 14:59:32.544194   92759 main.go:141] libmachine: (kanban)     <type>hvm</type>
+I1006 14:59:32.544202   92759 main.go:141] libmachine: (kanban)     <boot dev='cdrom'/>
+I1006 14:59:32.544208   92759 main.go:141] libmachine: (kanban)     <boot dev='hd'/>
+I1006 14:59:32.544218   92759 main.go:141] libmachine: (kanban)     <bootmenu enable='no'/>
+I1006 14:59:32.544227   92759 main.go:141] libmachine: (kanban)   </os>
+I1006 14:59:32.544235   92759 main.go:141] libmachine: (kanban)   <devices>
+I1006 14:59:32.544242   92759 main.go:141] libmachine: (kanban)     <disk type='file' device='cdrom'>
+I1006 14:59:32.544255   92759 main.go:141] libmachine: (kanban)       <source file='/home/spltr/.minikube/machines/kanban/boot2docker.iso'/>
+I1006 14:59:32.544263   92759 main.go:141] libmachine: (kanban)       <target dev='hdc' bus='scsi'/>
+I1006 14:59:32.544271   92759 main.go:141] libmachine: (kanban)       <readonly/>
+I1006 14:59:32.544276   92759 main.go:141] libmachine: (kanban)     </disk>
+I1006 14:59:32.544285   92759 main.go:141] libmachine: (kanban)     <disk type='file' device='disk'>
+I1006 14:59:32.544294   92759 main.go:141] libmachine: (kanban)       <driver name='qemu' type='raw' cache='default' io='threads' />
+I1006 14:59:32.544305   92759 main.go:141] libmachine: (kanban)       <source file='/home/spltr/.minikube/machines/kanban/kanban.rawdisk'/>
+I1006 14:59:32.544312   92759 main.go:141] libmachine: (kanban)       <target dev='hda' bus='virtio'/>
+I1006 14:59:32.544319   92759 main.go:141] libmachine: (kanban)     </disk>
+I1006 14:59:32.544326   92759 main.go:141] libmachine: (kanban)     <interface type='network'>
+I1006 14:59:32.544334   92759 main.go:141] libmachine: (kanban)       <source network='mk-kanban'/>
+I1006 14:59:32.544341   92759 main.go:141] libmachine: (kanban)       <model type='virtio'/>
+I1006 14:59:32.544348   92759 main.go:141] libmachine: (kanban)     </interface>
+I1006 14:59:32.544357   92759 main.go:141] libmachine: (kanban)     <interface type='network'>
+I1006 14:59:32.544365   92759 main.go:141] libmachine: (kanban)       <source network='default'/>
+I1006 14:59:32.544372   92759 main.go:141] libmachine: (kanban)       <model type='virtio'/>
+I1006 14:59:32.544379   92759 main.go:141] libmachine: (kanban)     </interface>
+I1006 14:59:32.544385   92759 main.go:141] libmachine: (kanban)     <serial type='pty'>
+I1006 14:59:32.544393   92759 main.go:141] libmachine: (kanban)       <target port='0'/>
+I1006 14:59:32.544403   92759 main.go:141] libmachine: (kanban)     </serial>
+I1006 14:59:32.544411   92759 main.go:141] libmachine: (kanban)     <console type='pty'>
+I1006 14:59:32.544421   92759 main.go:141] libmachine: (kanban)       <target type='serial' port='0'/>
+I1006 14:59:32.544429   92759 main.go:141] libmachine: (kanban)     </console>
+I1006 14:59:32.544435   92759 main.go:141] libmachine: (kanban)     <rng model='virtio'>
+I1006 14:59:32.544445   92759 main.go:141] libmachine: (kanban)       <backend model='random'>/dev/random</backend>
+I1006 14:59:32.544450   92759 main.go:141] libmachine: (kanban)     </rng>
+I1006 14:59:32.544457   92759 main.go:141] libmachine: (kanban)   </devices>
+I1006 14:59:32.544462   92759 main.go:141] libmachine: (kanban) </domain>
+I1006 14:59:32.544473   92759 main.go:141] libmachine: (kanban) 
+I1006 14:59:32.550765   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:5d:a5:31 in network default
+I1006 14:59:32.551991   92759 main.go:141] libmachine: (kanban) starting domain...
+I1006 14:59:32.552005   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:32.552010   92759 main.go:141] libmachine: (kanban) ensuring networks are active...
+I1006 14:59:32.553365   92759 main.go:141] libmachine: (kanban) Ensuring network default is active
+I1006 14:59:32.554522   92759 main.go:141] libmachine: (kanban) Ensuring network mk-kanban is active
+I1006 14:59:32.556250   92759 main.go:141] libmachine: (kanban) getting domain XML...
+I1006 14:59:32.558425   92759 main.go:141] libmachine: (kanban) DBG | starting domain XML:
+I1006 14:59:32.558438   92759 main.go:141] libmachine: (kanban) DBG | <domain type='kvm'>
+I1006 14:59:32.558450   92759 main.go:141] libmachine: (kanban) DBG |   <name>kanban</name>
+I1006 14:59:32.558460   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>868a2cbb-0b83-420f-9f91-4a2c96936f89</uuid>
+I1006 14:59:32.558471   92759 main.go:141] libmachine: (kanban) DBG |   <memory unit='KiB'>2097152</memory>
+I1006 14:59:32.558480   92759 main.go:141] libmachine: (kanban) DBG |   <currentMemory unit='KiB'>2097152</currentMemory>
+I1006 14:59:32.558490   92759 main.go:141] libmachine: (kanban) DBG |   <vcpu placement='static'>2</vcpu>
+I1006 14:59:32.558496   92759 main.go:141] libmachine: (kanban) DBG |   <os>
+I1006 14:59:32.558507   92759 main.go:141] libmachine: (kanban) DBG |     <type arch='x86_64' machine='pc-i440fx-noble-v2'>hvm</type>
+I1006 14:59:32.558514   92759 main.go:141] libmachine: (kanban) DBG |     <boot dev='cdrom'/>
+I1006 14:59:32.558522   92759 main.go:141] libmachine: (kanban) DBG |     <boot dev='hd'/>
+I1006 14:59:32.558529   92759 main.go:141] libmachine: (kanban) DBG |     <bootmenu enable='no'/>
+I1006 14:59:32.558549   92759 main.go:141] libmachine: (kanban) DBG |   </os>
+I1006 14:59:32.558556   92759 main.go:141] libmachine: (kanban) DBG |   <features>
+I1006 14:59:32.558591   92759 main.go:141] libmachine: (kanban) DBG |     <acpi/>
+I1006 14:59:32.558602   92759 main.go:141] libmachine: (kanban) DBG |     <apic/>
+I1006 14:59:32.558611   92759 main.go:141] libmachine: (kanban) DBG |     <pae/>
+I1006 14:59:32.558617   92759 main.go:141] libmachine: (kanban) DBG |   </features>
+I1006 14:59:32.558628   92759 main.go:141] libmachine: (kanban) DBG |   <cpu mode='host-passthrough' check='none' migratable='on'/>
+I1006 14:59:32.558634   92759 main.go:141] libmachine: (kanban) DBG |   <clock offset='utc'/>
+I1006 14:59:32.558644   92759 main.go:141] libmachine: (kanban) DBG |   <on_poweroff>destroy</on_poweroff>
+I1006 14:59:32.558651   92759 main.go:141] libmachine: (kanban) DBG |   <on_reboot>restart</on_reboot>
+I1006 14:59:32.558660   92759 main.go:141] libmachine: (kanban) DBG |   <on_crash>destroy</on_crash>
+I1006 14:59:32.558666   92759 main.go:141] libmachine: (kanban) DBG |   <devices>
+I1006 14:59:32.558676   92759 main.go:141] libmachine: (kanban) DBG |     <emulator>/usr/bin/qemu-system-x86_64</emulator>
+I1006 14:59:32.558683   92759 main.go:141] libmachine: (kanban) DBG |     <disk type='file' device='cdrom'>
+I1006 14:59:32.558693   92759 main.go:141] libmachine: (kanban) DBG |       <driver name='qemu' type='raw'/>
+I1006 14:59:32.558703   92759 main.go:141] libmachine: (kanban) DBG |       <source file='/home/spltr/.minikube/machines/kanban/boot2docker.iso'/>
+I1006 14:59:32.558713   92759 main.go:141] libmachine: (kanban) DBG |       <target dev='hdc' bus='scsi'/>
+I1006 14:59:32.558719   92759 main.go:141] libmachine: (kanban) DBG |       <readonly/>
+I1006 14:59:32.558745   92759 main.go:141] libmachine: (kanban) DBG |       <address type='drive' controller='0' bus='0' target='0' unit='2'/>
+I1006 14:59:32.558754   92759 main.go:141] libmachine: (kanban) DBG |     </disk>
+I1006 14:59:32.558765   92759 main.go:141] libmachine: (kanban) DBG |     <disk type='file' device='disk'>
+I1006 14:59:32.558774   92759 main.go:141] libmachine: (kanban) DBG |       <driver name='qemu' type='raw' io='threads'/>
+I1006 14:59:32.558786   92759 main.go:141] libmachine: (kanban) DBG |       <source file='/home/spltr/.minikube/machines/kanban/kanban.rawdisk'/>
+I1006 14:59:32.558793   92759 main.go:141] libmachine: (kanban) DBG |       <target dev='hda' bus='virtio'/>
+I1006 14:59:32.558805   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+I1006 14:59:32.558814   92759 main.go:141] libmachine: (kanban) DBG |     </disk>
+I1006 14:59:32.558824   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='usb' index='0' model='piix3-uhci'>
+I1006 14:59:32.558833   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
+I1006 14:59:32.558842   92759 main.go:141] libmachine: (kanban) DBG |     </controller>
+I1006 14:59:32.558849   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='pci' index='0' model='pci-root'/>
+I1006 14:59:32.558859   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='scsi' index='0' model='lsilogic'>
+I1006 14:59:32.558869   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
+I1006 14:59:32.558877   92759 main.go:141] libmachine: (kanban) DBG |     </controller>
+I1006 14:59:32.558885   92759 main.go:141] libmachine: (kanban) DBG |     <interface type='network'>
+I1006 14:59:32.558895   92759 main.go:141] libmachine: (kanban) DBG |       <mac address='52:54:00:6c:81:58'/>
+I1006 14:59:32.558906   92759 main.go:141] libmachine: (kanban) DBG |       <source network='mk-kanban'/>
+I1006 14:59:32.558915   92759 main.go:141] libmachine: (kanban) DBG |       <model type='virtio'/>
+I1006 14:59:32.558927   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+I1006 14:59:32.558935   92759 main.go:141] libmachine: (kanban) DBG |     </interface>
+I1006 14:59:32.558942   92759 main.go:141] libmachine: (kanban) DBG |     <interface type='network'>
+I1006 14:59:32.558952   92759 main.go:141] libmachine: (kanban) DBG |       <mac address='52:54:00:5d:a5:31'/>
+I1006 14:59:32.558959   92759 main.go:141] libmachine: (kanban) DBG |       <source network='default'/>
+I1006 14:59:32.558968   92759 main.go:141] libmachine: (kanban) DBG |       <model type='virtio'/>
+I1006 14:59:32.558977   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+I1006 14:59:32.558985   92759 main.go:141] libmachine: (kanban) DBG |     </interface>
+I1006 14:59:32.558991   92759 main.go:141] libmachine: (kanban) DBG |     <serial type='pty'>
+I1006 14:59:32.559000   92759 main.go:141] libmachine: (kanban) DBG |       <target type='isa-serial' port='0'>
+I1006 14:59:32.559007   92759 main.go:141] libmachine: (kanban) DBG |         <model name='isa-serial'/>
+I1006 14:59:32.559015   92759 main.go:141] libmachine: (kanban) DBG |       </target>
+I1006 14:59:32.559020   92759 main.go:141] libmachine: (kanban) DBG |     </serial>
+I1006 14:59:32.559028   92759 main.go:141] libmachine: (kanban) DBG |     <console type='pty'>
+I1006 14:59:32.559035   92759 main.go:141] libmachine: (kanban) DBG |       <target type='serial' port='0'/>
+I1006 14:59:32.559043   92759 main.go:141] libmachine: (kanban) DBG |     </console>
+I1006 14:59:32.559050   92759 main.go:141] libmachine: (kanban) DBG |     <input type='mouse' bus='ps2'/>
+I1006 14:59:32.559059   92759 main.go:141] libmachine: (kanban) DBG |     <input type='keyboard' bus='ps2'/>
+I1006 14:59:32.559065   92759 main.go:141] libmachine: (kanban) DBG |     <audio id='1' type='none'/>
+I1006 14:59:32.559074   92759 main.go:141] libmachine: (kanban) DBG |     <memballoon model='virtio'>
+I1006 14:59:32.559083   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
+I1006 14:59:32.559094   92759 main.go:141] libmachine: (kanban) DBG |     </memballoon>
+I1006 14:59:32.559100   92759 main.go:141] libmachine: (kanban) DBG |     <rng model='virtio'>
+I1006 14:59:32.559110   92759 main.go:141] libmachine: (kanban) DBG |       <backend model='random'>/dev/random</backend>
+I1006 14:59:32.559122   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+I1006 14:59:32.559130   92759 main.go:141] libmachine: (kanban) DBG |     </rng>
+I1006 14:59:32.559138   92759 main.go:141] libmachine: (kanban) DBG |   </devices>
+I1006 14:59:32.559146   92759 main.go:141] libmachine: (kanban) DBG | </domain>
+I1006 14:59:32.559151   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 14:59:34.157527   92759 main.go:141] libmachine: (kanban) waiting for domain to start...
+I1006 14:59:34.159820   92759 main.go:141] libmachine: (kanban) domain is now running
+I1006 14:59:34.159835   92759 main.go:141] libmachine: (kanban) waiting for IP...
+I1006 14:59:34.160911   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:34.161457   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:34.161475   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:34.162176   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:34.162031   92983 retry.go:31] will retry after 216.17893ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:34.380319   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:34.381301   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:34.381318   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:34.382155   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:34.381976   92983 retry.go:31] will retry after 281.894857ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:34.666550   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:34.667594   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:34.667607   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:34.668425   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:34.668270   92983 retry.go:31] will retry after 324.845626ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:34.995555   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:34.996412   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:34.996428   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:34.997004   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:34.996887   92983 retry.go:31] will retry after 599.073141ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:35.599688   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:35.600547   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:35.600564   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:35.601201   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:35.601089   92983 retry.go:31] will retry after 562.010621ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:36.165795   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:36.166872   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:36.166892   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:36.167508   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:36.167426   92983 retry.go:31] will retry after 641.934566ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:36.811156   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:36.812063   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:36.812109   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:36.812735   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:36.812621   92983 retry.go:31] will retry after 823.985629ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:37.638650   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:37.639507   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:37.639522   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:37.640310   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:37.640167   92983 retry.go:31] will retry after 1.417694569s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:39.060977   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:39.062173   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:39.062199   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:39.062987   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:39.062842   92983 retry.go:31] will retry after 1.416060025s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:40.481823   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:40.482784   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:40.482802   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:40.483780   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:40.483614   92983 retry.go:31] will retry after 2.005861399s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:42.491214   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:42.492051   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:42.492064   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:42.492604   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:42.492495   92983 retry.go:31] will retry after 1.892931713s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:44.387526   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:44.388518   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:44.388544   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:44.389407   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:44.389236   92983 retry.go:31] will retry after 3.137417689s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:47.528653   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:47.529630   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:47.529649   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:47.531061   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:47.530753   92983 retry.go:31] will retry after 3.6716869s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:51.207432   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:51.208418   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:51.208441   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:51.209215   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:51.209062   92983 retry.go:31] will retry after 3.920961707s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 14:59:55.134465   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 14:59:55.135055   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 14:59:55.135068   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 14:59:55.135486   92759 main.go:141] libmachine: (kanban) DBG | I1006 14:59:55.135407   92983 retry.go:31] will retry after 6.64554263s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:01.783109   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 15:00:01.783518   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:01.783528   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:01.783926   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:01.783827   92983 retry.go:31] will retry after 7.547359364s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:09.335566   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 15:00:09.336210   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:09.336220   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:09.336973   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:09.336799   92983 retry.go:31] will retry after 10.993864975s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:20.336202   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 15:00:20.337023   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:20.337039   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:20.337615   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:20.337530   92983 retry.go:31] will retry after 11.551494561s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:31.891183   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 15:00:31.891907   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:31.891918   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:31.892431   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:31.892337   92983 retry.go:31] will retry after 15.087866302s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:46.981782   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:6c:81:58 in network mk-kanban
+I1006 15:00:46.982484   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:46.982494   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:46.983687   92759 client.go:171] duration metric: took 1m15.688871269s to LocalClient.Create
+I1006 15:00:48.984812   92759 start.go:128] duration metric: took 1m17.708608751s to createHost
+I1006 15:00:48.984828   92759 start.go:83] releasing machines lock for "kanban", held for 1m17.710806395s
+W1006 15:00:48.984853   92759 start.go:714] error starting host: creating host: create: Error creating machine: Error in driver during machine creation: starting domain: waiting for IP: domain kanban didn't return IP after 1m30s
+I1006 15:00:48.985268   92759 main.go:141] libmachine: Found binary path at /home/spltr/.minikube/bin/docker-machine-driver-kvm2
+I1006 15:00:48.985302   92759 main.go:141] libmachine: Launching plugin server for driver kvm2
+I1006 15:00:49.000232   92759 main.go:141] libmachine: Plugin server listening at address 127.0.0.1:35055
+I1006 15:00:49.000777   92759 main.go:141] libmachine: () Calling .GetVersion
+I1006 15:00:49.001323   92759 main.go:141] libmachine: Using API Version  1
+I1006 15:00:49.001335   92759 main.go:141] libmachine: () Calling .SetConfigRaw
+I1006 15:00:49.001695   92759 main.go:141] libmachine: () Calling .GetMachineName
+I1006 15:00:49.002286   92759 main.go:141] libmachine: Found binary path at /home/spltr/.minikube/bin/docker-machine-driver-kvm2
+I1006 15:00:49.002319   92759 main.go:141] libmachine: Launching plugin server for driver kvm2
+I1006 15:00:49.015578   92759 main.go:141] libmachine: Plugin server listening at address 127.0.0.1:34883
+I1006 15:00:49.016233   92759 main.go:141] libmachine: () Calling .GetVersion
+I1006 15:00:49.016848   92759 main.go:141] libmachine: Using API Version  1
+I1006 15:00:49.016862   92759 main.go:141] libmachine: () Calling .SetConfigRaw
+I1006 15:00:49.017320   92759 main.go:141] libmachine: () Calling .GetMachineName
+I1006 15:00:49.017494   92759 main.go:141] libmachine: (kanban) Calling .GetState
+I1006 15:00:49.020610   92759 main.go:141] libmachine: (kanban) Calling .DriverName
+I1006 15:00:49.023183   92759 out.go:179] 🔥  Deleting "kanban" in kvm2 ...
+I1006 15:00:49.023670   92759 main.go:141] libmachine: (kanban) Calling .Remove
+I1006 15:00:49.024038   92759 main.go:141] libmachine: (kanban) removing KVM machine...
+I1006 15:00:49.025464   92759 main.go:141] libmachine: (kanban) deleting networks...
+I1006 15:00:49.026449   92759 main.go:141] libmachine: (kanban) DBG | Checking if network mk-kanban exists...
+I1006 15:00:49.026594   92759 main.go:141] libmachine: (kanban) DBG | Network mk-kanban exists
+I1006 15:00:49.026610   92759 main.go:141] libmachine: (kanban) DBG | Trying to list all domains...
+I1006 15:00:49.026820   92759 main.go:141] libmachine: (kanban) DBG | Listed all domains: total of 6 domains
+I1006 15:00:49.026832   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.026841   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: kanban
+I1006 15:00:49.026848   92759 main.go:141] libmachine: (kanban) DBG | Skipping domain as it is us...
+I1006 15:00:49.026860   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.026866   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: win11-2
+I1006 15:00:49.026876   92759 main.go:141] libmachine: (kanban) DBG | Getting XML for domain win11-2...
+I1006 15:00:49.027378   92759 main.go:141] libmachine: (kanban) DBG | Got XML for domain win11-2
+I1006 15:00:49.028049   92759 main.go:141] libmachine: (kanban) DBG | Unmarshaled XML for domain win11-2: kvm.result{Name:"win11-2", Interfaces:[]kvm.iface{kvm.iface{Source:kvm.source{Network:"default"}}}}
+I1006 15:00:49.028073   92759 main.go:141] libmachine: (kanban) DBG | domain win11-2 does not use network mk-kanban
+I1006 15:00:49.028084   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.028090   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: win11
+I1006 15:00:49.028102   92759 main.go:141] libmachine: (kanban) DBG | Getting XML for domain win11...
+I1006 15:00:49.028605   92759 main.go:141] libmachine: (kanban) DBG | Got XML for domain win11
+I1006 15:00:49.029154   92759 main.go:141] libmachine: (kanban) DBG | Unmarshaled XML for domain win11: kvm.result{Name:"win11", Interfaces:[]kvm.iface{kvm.iface{Source:kvm.source{Network:"default"}}}}
+I1006 15:00:49.029168   92759 main.go:141] libmachine: (kanban) DBG | domain win11 does not use network mk-kanban
+I1006 15:00:49.029178   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.029187   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: linux2024
+I1006 15:00:49.029224   92759 main.go:141] libmachine: (kanban) DBG | Getting XML for domain linux2024...
+I1006 15:00:49.030117   92759 main.go:141] libmachine: (kanban) DBG | Got XML for domain linux2024
+I1006 15:00:49.030387   92759 main.go:141] libmachine: (kanban) DBG | Unmarshaled XML for domain linux2024: kvm.result{Name:"linux2024", Interfaces:[]kvm.iface{kvm.iface{Source:kvm.source{Network:"default"}}}}
+I1006 15:00:49.030398   92759 main.go:141] libmachine: (kanban) DBG | domain linux2024 does not use network mk-kanban
+I1006 15:00:49.030407   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.030413   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: server
+I1006 15:00:49.030425   92759 main.go:141] libmachine: (kanban) DBG | Getting XML for domain server...
+I1006 15:00:49.031052   92759 main.go:141] libmachine: (kanban) DBG | Got XML for domain server
+I1006 15:00:49.031576   92759 main.go:141] libmachine: (kanban) DBG | Unmarshaled XML for domain server: kvm.result{Name:"server", Interfaces:[]kvm.iface{kvm.iface{Source:kvm.source{Network:"default"}}}}
+I1006 15:00:49.031589   92759 main.go:141] libmachine: (kanban) DBG | domain server does not use network mk-kanban
+I1006 15:00:49.031599   92759 main.go:141] libmachine: (kanban) DBG | Trying to get name of domain...
+I1006 15:00:49.031605   92759 main.go:141] libmachine: (kanban) DBG | Got domain name: minikube
+I1006 15:00:49.031616   92759 main.go:141] libmachine: (kanban) DBG | Getting XML for domain minikube...
+I1006 15:00:49.031984   92759 main.go:141] libmachine: (kanban) DBG | Got XML for domain minikube
+I1006 15:00:49.032149   92759 main.go:141] libmachine: (kanban) DBG | Unmarshaled XML for domain minikube: kvm.result{Name:"minikube", Interfaces:[]kvm.iface{kvm.iface{Source:kvm.source{Network:"mk-minikube"}}, kvm.iface{Source:kvm.source{Network:"default"}}}}
+I1006 15:00:49.032158   92759 main.go:141] libmachine: (kanban) DBG | domain minikube does not use network mk-kanban
+I1006 15:00:49.032174   92759 main.go:141] libmachine: (kanban) DBG | domain minikube does not use network mk-kanban
+I1006 15:00:49.032180   92759 main.go:141] libmachine: (kanban) DBG | Trying to delete network mk-kanban...
+I1006 15:00:49.032378   92759 main.go:141] libmachine: (kanban) DBG | Destroying active network mk-kanban
+I1006 15:00:49.233586   92759 main.go:141] libmachine: (kanban) DBG | Undefining inactive network mk-kanban
+I1006 15:00:49.234337   92759 main.go:141] libmachine: (kanban) DBG | Network mk-kanban deleted
+I1006 15:00:49.234448   92759 main.go:141] libmachine: (kanban) successfully deleted networks
+I1006 15:00:49.234468   92759 main.go:141] libmachine: (kanban) checking if the domain needs to be deleted
+I1006 15:00:49.234778   92759 main.go:141] libmachine: (kanban) domain kanban exists, removing...
+I1006 15:00:49.540324   92759 main.go:141] libmachine: (kanban) DBG | skip deleting static IP from network mk-kanban - couldn't find host DHCP lease matching {name: "", mac: "", ip: ""}
+I1006 15:00:49.540348   92759 main.go:141] libmachine: (kanban) removing static IP address...
+I1006 15:00:49.540355   92759 main.go:141] libmachine: (kanban) removed static IP address  for domain kanban
+I1006 15:00:49.540364   92759 main.go:141] libmachine: (kanban) KVM machine removal complete
+W1006 15:00:49.563079   92759 out.go:285] 🤦  StartHost failed, but will try again: creating host: create: Error creating machine: Error in driver during machine creation: starting domain: waiting for IP: domain kanban didn't return IP after 1m30s
+I1006 15:00:49.563107   92759 start.go:729] Will try again in 5 seconds ...
+I1006 15:00:54.563766   92759 start.go:360] acquireMachinesLock for kanban: {Name:mk55144dccc0f28aaa12781584cee3e6816c8ec3 Clock:{} Delay:500ms Timeout:13m0s Cancel:<nil>}
+I1006 15:00:54.564198   92759 start.go:364] duration metric: took 337.36µs to acquireMachinesLock for "kanban"
+I1006 15:00:54.564262   92759 start.go:93] Provisioning new machine with config: &{Name:kanban KeepContext:false EmbedCerts:false MinikubeISO:https://storage.googleapis.com/minikube/iso/minikube-v1.37.0-amd64.iso KicBaseImage:gcr.io/k8s-minikube/kicbase:v0.0.48@sha256:7171c97a51623558720f8e5878e4f4637da093e2f2ed589997bedc6c1549b2b1 Memory:2048 CPUs:2 DiskSize:20000 Driver:kvm2 HyperkitVpnKitSock: HyperkitVSockPorts:[] DockerEnv:[] ContainerVolumeMounts:[] InsecureRegistry:[] RegistryMirror:[] HostOnlyCIDR:192.168.59.1/24 HypervVirtualSwitch: HypervUseExternalSwitch:false HypervExternalAdapter: KVMNetwork:default KVMQemuURI:qemu:///system KVMGPU:false KVMHidden:false KVMNUMACount:1 APIServerPort:8443 DockerOpt:[] DisableDriverMounts:false NFSShare:[] NFSSharesRoot:/nfsshares UUID: NoVTXCheck:false DNSProxy:false HostDNSResolver:true HostOnlyNicType:virtio NatNicType:virtio SSHIPAddress: SSHUser:root SSHKey: SSHPort:22 KubernetesConfig:{KubernetesVersion:v1.34.0 ClusterName:kanban Namespace:default APIServerHAVIP: APIServerName:minikubeCA APIServerNames:[] APIServerIPs:[] DNSDomain:cluster.local ContainerRuntime:containerd CRISocket: NetworkPlugin:cni FeatureGates: ServiceCIDR:10.96.0.0/12 ImageRepository: LoadBalancerStartIP: LoadBalancerEndIP: CustomIngressCert: RegistryAliases: ExtraOptions:[] ShouldLoadCachedImages:true EnableDefaultCNI:false CNI:} Nodes:[{Name: IP: Port:8443 KubernetesVersion:v1.34.0 ContainerRuntime:containerd ControlPlane:true Worker:true}] Addons:map[] CustomAddonImages:map[] CustomAddonRegistries:map[] VerifyComponents:map[apiserver:true system_pods:true] StartHostTimeout:6m0s ScheduledStop:<nil> ExposedPorts:[] ListenAddress: Network: Subnet: MultiNodeRequested:true ExtraDisks:0 CertExpiration:26280h0m0s MountString: Mount9PVersion:9p2000.L MountGID:docker MountIP: MountMSize:262144 MountOptions:[] MountPort:0 MountType:9p MountUID:docker BinaryMirror: DisableOptimizations:false DisableMetrics:false DisableCoreDNSLog:false CustomQemuFirmwarePath: SocketVMnetClientPath: SocketVMnetPath: StaticIP: SSHAuthSock: SSHAgentPID:0 GPUs: AutoPauseInterval:1m0s} &{Name: IP: Port:8443 KubernetesVersion:v1.34.0 ContainerRuntime:containerd ControlPlane:true Worker:true}
+I1006 15:00:54.564384   92759 start.go:125] createHost starting for "" (driver="kvm2")
+I1006 15:00:54.568269   92759 out.go:252] 🔥  Creating kvm2 VM (CPUs=2, Memory=2048MB, Disk=20000MB) ...
+I1006 15:00:54.568490   92759 main.go:141] libmachine: Found binary path at /home/spltr/.minikube/bin/docker-machine-driver-kvm2
+I1006 15:00:54.568568   92759 main.go:141] libmachine: Launching plugin server for driver kvm2
+I1006 15:00:54.589575   92759 main.go:141] libmachine: Plugin server listening at address 127.0.0.1:46563
+I1006 15:00:54.590332   92759 main.go:141] libmachine: () Calling .GetVersion
+I1006 15:00:54.591117   92759 main.go:141] libmachine: Using API Version  1
+I1006 15:00:54.591131   92759 main.go:141] libmachine: () Calling .SetConfigRaw
+I1006 15:00:54.591579   92759 main.go:141] libmachine: () Calling .GetMachineName
+I1006 15:00:54.591769   92759 main.go:141] libmachine: (kanban) Calling .GetMachineName
+I1006 15:00:54.592116   92759 main.go:141] libmachine: (kanban) Calling .DriverName
+I1006 15:00:54.592335   92759 start.go:159] libmachine.API.Create for "kanban" (driver="kvm2")
+I1006 15:00:54.592363   92759 client.go:168] LocalClient.Create starting
+I1006 15:00:54.592398   92759 main.go:141] libmachine: Reading certificate data from /home/spltr/.minikube/certs/ca.pem
+I1006 15:00:54.592456   92759 main.go:141] libmachine: Decoding PEM data...
+I1006 15:00:54.592473   92759 main.go:141] libmachine: Parsing certificate...
+I1006 15:00:54.592542   92759 main.go:141] libmachine: Reading certificate data from /home/spltr/.minikube/certs/cert.pem
+I1006 15:00:54.592566   92759 main.go:141] libmachine: Decoding PEM data...
+I1006 15:00:54.592582   92759 main.go:141] libmachine: Parsing certificate...
+I1006 15:00:54.592602   92759 main.go:141] libmachine: Running pre-create checks...
+I1006 15:00:54.592613   92759 main.go:141] libmachine: (kanban) Calling .PreCreateCheck
+I1006 15:00:54.592893   92759 main.go:141] libmachine: (kanban) Calling .GetConfigRaw
+I1006 15:00:54.593536   92759 main.go:141] libmachine: Creating machine...
+I1006 15:00:54.593547   92759 main.go:141] libmachine: (kanban) Calling .Create
+I1006 15:00:54.593723   92759 main.go:141] libmachine: (kanban) creating domain...
+I1006 15:00:54.593744   92759 main.go:141] libmachine: (kanban) creating network...
+I1006 15:00:54.596168   92759 main.go:141] libmachine: (kanban) DBG | found existing default network
+I1006 15:00:54.596417   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 15:00:54.596429   92759 main.go:141] libmachine: (kanban) DBG |   <name>default</name>
+I1006 15:00:54.596441   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>1fd663eb-e0eb-47c6-bbd4-aa58c28b06d2</uuid>
+I1006 15:00:54.596447   92759 main.go:141] libmachine: (kanban) DBG |   <forward mode='nat'>
+I1006 15:00:54.596454   92759 main.go:141] libmachine: (kanban) DBG |     <nat>
+I1006 15:00:54.596460   92759 main.go:141] libmachine: (kanban) DBG |       <port start='1024' end='65535'/>
+I1006 15:00:54.596467   92759 main.go:141] libmachine: (kanban) DBG |     </nat>
+I1006 15:00:54.596471   92759 main.go:141] libmachine: (kanban) DBG |   </forward>
+I1006 15:00:54.596485   92759 main.go:141] libmachine: (kanban) DBG |   <bridge name='virbr0' stp='on' delay='0'/>
+I1006 15:00:54.596492   92759 main.go:141] libmachine: (kanban) DBG |   <mac address='52:54:00:b7:d6:0b'/>
+I1006 15:00:54.596501   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.122.1' netmask='255.255.255.0'>
+I1006 15:00:54.596509   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 15:00:54.596518   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.122.2' end='192.168.122.254'/>
+I1006 15:00:54.596526   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 15:00:54.596535   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 15:00:54.596543   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 15:00:54.596580   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 15:00:54.597637   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.597384   93340 network.go:211] skipping subnet 192.168.39.0/24 that is taken: &{IP:192.168.39.0 Netmask:255.255.255.0 Prefix:24 CIDR:192.168.39.0/24 Gateway:192.168.39.1 ClientMin:192.168.39.2 ClientMax:192.168.39.254 Broadcast:192.168.39.255 IsPrivate:true Interface:{IfaceName:virbr1 IfaceIPv4:192.168.39.1 IfaceMTU:1500 IfaceMAC:52:54:00:35:c7:4c} reservation:<nil>}
+I1006 15:00:54.600147   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.599951   93340 network.go:209] skipping subnet 192.168.50.0/24 that is reserved: &{IP:192.168.50.0 Netmask:255.255.255.0 Prefix:24 CIDR:192.168.50.0/24 Gateway:192.168.50.1 ClientMin:192.168.50.2 ClientMax:192.168.50.254 Broadcast:192.168.50.255 IsPrivate:true Interface:{IfaceName: IfaceIPv4: IfaceMTU:0 IfaceMAC:} reservation:<nil>}
+I1006 15:00:54.601847   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.601655   93340 network.go:206] using free private subnet 192.168.61.0/24: &{IP:192.168.61.0 Netmask:255.255.255.0 Prefix:24 CIDR:192.168.61.0/24 Gateway:192.168.61.1 ClientMin:192.168.61.2 ClientMax:192.168.61.254 Broadcast:192.168.61.255 IsPrivate:true Interface:{IfaceName: IfaceIPv4: IfaceMTU:0 IfaceMAC:} reservation:0xc000183280}
+I1006 15:00:54.601877   92759 main.go:141] libmachine: (kanban) DBG | defining private network:
+I1006 15:00:54.601920   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 15:00:54.601932   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 15:00:54.601939   92759 main.go:141] libmachine: (kanban) DBG |   <name>mk-kanban</name>
+I1006 15:00:54.601948   92759 main.go:141] libmachine: (kanban) DBG |   <dns enable='no'/>
+I1006 15:00:54.601957   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.61.1' netmask='255.255.255.0'>
+I1006 15:00:54.601966   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 15:00:54.601983   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.61.2' end='192.168.61.253'/>
+I1006 15:00:54.601993   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 15:00:54.601999   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 15:00:54.602007   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 15:00:54.602013   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 15:00:54.612504   92759 main.go:141] libmachine: (kanban) DBG | creating private network mk-kanban 192.168.61.0/24...
+I1006 15:00:54.727948   92759 main.go:141] libmachine: (kanban) DBG | private network mk-kanban 192.168.61.0/24 created
+I1006 15:00:54.728625   92759 main.go:141] libmachine: (kanban) setting up store path in /home/spltr/.minikube/machines/kanban ...
+I1006 15:00:54.728648   92759 main.go:141] libmachine: (kanban) building disk image from file:///home/spltr/.minikube/cache/iso/amd64/minikube-v1.37.0-amd64.iso
+I1006 15:00:54.728657   92759 main.go:141] libmachine: (kanban) DBG | <network>
+I1006 15:00:54.728666   92759 main.go:141] libmachine: (kanban) DBG |   <name>mk-kanban</name>
+I1006 15:00:54.728673   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>04454278-75a9-48ab-a347-aa95917319d2</uuid>
+I1006 15:00:54.728682   92759 main.go:141] libmachine: (kanban) DBG |   <bridge name='virbr2' stp='on' delay='0'/>
+I1006 15:00:54.728688   92759 main.go:141] libmachine: (kanban) DBG |   <mac address='52:54:00:9f:df:54'/>
+I1006 15:00:54.728699   92759 main.go:141] libmachine: (kanban) Downloading /home/spltr/.minikube/cache/boot2docker.iso from file:///home/spltr/.minikube/cache/iso/amd64/minikube-v1.37.0-amd64.iso...
+I1006 15:00:54.728705   92759 main.go:141] libmachine: (kanban) DBG |   <dns enable='no'/>
+I1006 15:00:54.728714   92759 main.go:141] libmachine: (kanban) DBG |   <ip address='192.168.61.1' netmask='255.255.255.0'>
+I1006 15:00:54.728719   92759 main.go:141] libmachine: (kanban) DBG |     <dhcp>
+I1006 15:00:54.728740   92759 main.go:141] libmachine: (kanban) DBG |       <range start='192.168.61.2' end='192.168.61.253'/>
+I1006 15:00:54.728749   92759 main.go:141] libmachine: (kanban) DBG |     </dhcp>
+I1006 15:00:54.728758   92759 main.go:141] libmachine: (kanban) DBG |   </ip>
+I1006 15:00:54.728765   92759 main.go:141] libmachine: (kanban) DBG | </network>
+I1006 15:00:54.728772   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 15:00:54.728784   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.728548   93340 common.go:144] Making disk image using store path: /home/spltr/.minikube
+I1006 15:00:54.876955   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.876760   93340 common.go:151] Creating ssh key: /home/spltr/.minikube/machines/kanban/id_rsa...
+I1006 15:00:54.970516   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.970422   93340 common.go:157] Creating raw disk image: /home/spltr/.minikube/machines/kanban/kanban.rawdisk...
+I1006 15:00:54.970526   92759 main.go:141] libmachine: (kanban) DBG | Writing magic tar header
+I1006 15:00:54.970536   92759 main.go:141] libmachine: (kanban) DBG | Writing SSH key tar header
+I1006 15:00:54.970542   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:54.970506   93340 common.go:171] Fixing permissions on /home/spltr/.minikube/machines/kanban ...
+I1006 15:00:54.970587   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube/machines/kanban
+I1006 15:00:54.970603   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube/machines
+I1006 15:00:54.970608   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr/.minikube
+I1006 15:00:54.970619   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube/machines/kanban (perms=drwx------)
+I1006 15:00:54.970624   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube/machines (perms=drwxr-xr-x)
+I1006 15:00:54.970632   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr/.minikube (perms=drwxr-xr-x)
+I1006 15:00:54.970707   92759 main.go:141] libmachine: (kanban) setting executable bit set on /home/spltr (perms=drwxr-x--x)
+I1006 15:00:54.970716   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home/spltr
+I1006 15:00:54.970721   92759 main.go:141] libmachine: (kanban) DBG | checking permissions on dir: /home
+I1006 15:00:54.970739   92759 main.go:141] libmachine: (kanban) DBG | skipping /home - not owner
+I1006 15:00:54.970748   92759 main.go:141] libmachine: (kanban) defining domain...
+I1006 15:00:54.971830   92759 main.go:141] libmachine: (kanban) defining domain using XML: 
+I1006 15:00:54.971840   92759 main.go:141] libmachine: (kanban) <domain type='kvm'>
+I1006 15:00:54.971845   92759 main.go:141] libmachine: (kanban)   <name>kanban</name>
+I1006 15:00:54.971848   92759 main.go:141] libmachine: (kanban)   <memory unit='MiB'>2048</memory>
+I1006 15:00:54.971852   92759 main.go:141] libmachine: (kanban)   <vcpu>2</vcpu>
+I1006 15:00:54.971855   92759 main.go:141] libmachine: (kanban)   <features>
+I1006 15:00:54.971858   92759 main.go:141] libmachine: (kanban)     <acpi/>
+I1006 15:00:54.971861   92759 main.go:141] libmachine: (kanban)     <apic/>
+I1006 15:00:54.971864   92759 main.go:141] libmachine: (kanban)     <pae/>
+I1006 15:00:54.971867   92759 main.go:141] libmachine: (kanban)   </features>
+I1006 15:00:54.971871   92759 main.go:141] libmachine: (kanban)   <cpu mode='host-passthrough'>
+I1006 15:00:54.971874   92759 main.go:141] libmachine: (kanban)   </cpu>
+I1006 15:00:54.971877   92759 main.go:141] libmachine: (kanban)   <os>
+I1006 15:00:54.971880   92759 main.go:141] libmachine: (kanban)     <type>hvm</type>
+I1006 15:00:54.971883   92759 main.go:141] libmachine: (kanban)     <boot dev='cdrom'/>
+I1006 15:00:54.971886   92759 main.go:141] libmachine: (kanban)     <boot dev='hd'/>
+I1006 15:00:54.971890   92759 main.go:141] libmachine: (kanban)     <bootmenu enable='no'/>
+I1006 15:00:54.971892   92759 main.go:141] libmachine: (kanban)   </os>
+I1006 15:00:54.971896   92759 main.go:141] libmachine: (kanban)   <devices>
+I1006 15:00:54.971899   92759 main.go:141] libmachine: (kanban)     <disk type='file' device='cdrom'>
+I1006 15:00:54.971905   92759 main.go:141] libmachine: (kanban)       <source file='/home/spltr/.minikube/machines/kanban/boot2docker.iso'/>
+I1006 15:00:54.971918   92759 main.go:141] libmachine: (kanban)       <target dev='hdc' bus='scsi'/>
+I1006 15:00:54.971922   92759 main.go:141] libmachine: (kanban)       <readonly/>
+I1006 15:00:54.971924   92759 main.go:141] libmachine: (kanban)     </disk>
+I1006 15:00:54.971928   92759 main.go:141] libmachine: (kanban)     <disk type='file' device='disk'>
+I1006 15:00:54.971932   92759 main.go:141] libmachine: (kanban)       <driver name='qemu' type='raw' cache='default' io='threads' />
+I1006 15:00:54.971938   92759 main.go:141] libmachine: (kanban)       <source file='/home/spltr/.minikube/machines/kanban/kanban.rawdisk'/>
+I1006 15:00:54.971941   92759 main.go:141] libmachine: (kanban)       <target dev='hda' bus='virtio'/>
+I1006 15:00:54.971944   92759 main.go:141] libmachine: (kanban)     </disk>
+I1006 15:00:54.971948   92759 main.go:141] libmachine: (kanban)     <interface type='network'>
+I1006 15:00:54.971952   92759 main.go:141] libmachine: (kanban)       <source network='mk-kanban'/>
+I1006 15:00:54.971955   92759 main.go:141] libmachine: (kanban)       <model type='virtio'/>
+I1006 15:00:54.971958   92759 main.go:141] libmachine: (kanban)     </interface>
+I1006 15:00:54.971962   92759 main.go:141] libmachine: (kanban)     <interface type='network'>
+I1006 15:00:54.971965   92759 main.go:141] libmachine: (kanban)       <source network='default'/>
+I1006 15:00:54.971968   92759 main.go:141] libmachine: (kanban)       <model type='virtio'/>
+I1006 15:00:54.971972   92759 main.go:141] libmachine: (kanban)     </interface>
+I1006 15:00:54.971974   92759 main.go:141] libmachine: (kanban)     <serial type='pty'>
+I1006 15:00:54.971978   92759 main.go:141] libmachine: (kanban)       <target port='0'/>
+I1006 15:00:54.971981   92759 main.go:141] libmachine: (kanban)     </serial>
+I1006 15:00:54.971985   92759 main.go:141] libmachine: (kanban)     <console type='pty'>
+I1006 15:00:54.971988   92759 main.go:141] libmachine: (kanban)       <target type='serial' port='0'/>
+I1006 15:00:54.971991   92759 main.go:141] libmachine: (kanban)     </console>
+I1006 15:00:54.971994   92759 main.go:141] libmachine: (kanban)     <rng model='virtio'>
+I1006 15:00:54.971999   92759 main.go:141] libmachine: (kanban)       <backend model='random'>/dev/random</backend>
+I1006 15:00:54.972001   92759 main.go:141] libmachine: (kanban)     </rng>
+I1006 15:00:54.972005   92759 main.go:141] libmachine: (kanban)   </devices>
+I1006 15:00:54.972007   92759 main.go:141] libmachine: (kanban) </domain>
+I1006 15:00:54.972012   92759 main.go:141] libmachine: (kanban) 
+I1006 15:00:54.980053   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:3d:f4:6e in network default
+I1006 15:00:54.981089   92759 main.go:141] libmachine: (kanban) starting domain...
+I1006 15:00:54.981100   92759 main.go:141] libmachine: (kanban) ensuring networks are active...
+I1006 15:00:54.981119   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:54.982621   92759 main.go:141] libmachine: (kanban) Ensuring network default is active
+I1006 15:00:54.983160   92759 main.go:141] libmachine: (kanban) Ensuring network mk-kanban is active
+I1006 15:00:54.984239   92759 main.go:141] libmachine: (kanban) getting domain XML...
+I1006 15:00:54.985849   92759 main.go:141] libmachine: (kanban) DBG | starting domain XML:
+I1006 15:00:54.985860   92759 main.go:141] libmachine: (kanban) DBG | <domain type='kvm'>
+I1006 15:00:54.985884   92759 main.go:141] libmachine: (kanban) DBG |   <name>kanban</name>
+I1006 15:00:54.985890   92759 main.go:141] libmachine: (kanban) DBG |   <uuid>5e050aad-d41c-4b37-9f5a-06240bfa54d0</uuid>
+I1006 15:00:54.985904   92759 main.go:141] libmachine: (kanban) DBG |   <memory unit='KiB'>2097152</memory>
+I1006 15:00:54.985910   92759 main.go:141] libmachine: (kanban) DBG |   <currentMemory unit='KiB'>2097152</currentMemory>
+I1006 15:00:54.985917   92759 main.go:141] libmachine: (kanban) DBG |   <vcpu placement='static'>2</vcpu>
+I1006 15:00:54.985921   92759 main.go:141] libmachine: (kanban) DBG |   <os>
+I1006 15:00:54.985930   92759 main.go:141] libmachine: (kanban) DBG |     <type arch='x86_64' machine='pc-i440fx-noble-v2'>hvm</type>
+I1006 15:00:54.985938   92759 main.go:141] libmachine: (kanban) DBG |     <boot dev='cdrom'/>
+I1006 15:00:54.985945   92759 main.go:141] libmachine: (kanban) DBG |     <boot dev='hd'/>
+I1006 15:00:54.985958   92759 main.go:141] libmachine: (kanban) DBG |     <bootmenu enable='no'/>
+I1006 15:00:54.985964   92759 main.go:141] libmachine: (kanban) DBG |   </os>
+I1006 15:00:54.985969   92759 main.go:141] libmachine: (kanban) DBG |   <features>
+I1006 15:00:54.985975   92759 main.go:141] libmachine: (kanban) DBG |     <acpi/>
+I1006 15:00:54.985979   92759 main.go:141] libmachine: (kanban) DBG |     <apic/>
+I1006 15:00:54.985985   92759 main.go:141] libmachine: (kanban) DBG |     <pae/>
+I1006 15:00:54.985990   92759 main.go:141] libmachine: (kanban) DBG |   </features>
+I1006 15:00:54.985997   92759 main.go:141] libmachine: (kanban) DBG |   <cpu mode='host-passthrough' check='none' migratable='on'/>
+I1006 15:00:54.986002   92759 main.go:141] libmachine: (kanban) DBG |   <clock offset='utc'/>
+I1006 15:00:54.986009   92759 main.go:141] libmachine: (kanban) DBG |   <on_poweroff>destroy</on_poweroff>
+I1006 15:00:54.986014   92759 main.go:141] libmachine: (kanban) DBG |   <on_reboot>restart</on_reboot>
+I1006 15:00:54.986021   92759 main.go:141] libmachine: (kanban) DBG |   <on_crash>destroy</on_crash>
+I1006 15:00:54.986025   92759 main.go:141] libmachine: (kanban) DBG |   <devices>
+I1006 15:00:54.986033   92759 main.go:141] libmachine: (kanban) DBG |     <emulator>/usr/bin/qemu-system-x86_64</emulator>
+I1006 15:00:54.986038   92759 main.go:141] libmachine: (kanban) DBG |     <disk type='file' device='cdrom'>
+I1006 15:00:54.986045   92759 main.go:141] libmachine: (kanban) DBG |       <driver name='qemu' type='raw'/>
+I1006 15:00:54.986052   92759 main.go:141] libmachine: (kanban) DBG |       <source file='/home/spltr/.minikube/machines/kanban/boot2docker.iso'/>
+I1006 15:00:54.986059   92759 main.go:141] libmachine: (kanban) DBG |       <target dev='hdc' bus='scsi'/>
+I1006 15:00:54.986063   92759 main.go:141] libmachine: (kanban) DBG |       <readonly/>
+I1006 15:00:54.986071   92759 main.go:141] libmachine: (kanban) DBG |       <address type='drive' controller='0' bus='0' target='0' unit='2'/>
+I1006 15:00:54.986086   92759 main.go:141] libmachine: (kanban) DBG |     </disk>
+I1006 15:00:54.986093   92759 main.go:141] libmachine: (kanban) DBG |     <disk type='file' device='disk'>
+I1006 15:00:54.986099   92759 main.go:141] libmachine: (kanban) DBG |       <driver name='qemu' type='raw' io='threads'/>
+I1006 15:00:54.986107   92759 main.go:141] libmachine: (kanban) DBG |       <source file='/home/spltr/.minikube/machines/kanban/kanban.rawdisk'/>
+I1006 15:00:54.986112   92759 main.go:141] libmachine: (kanban) DBG |       <target dev='hda' bus='virtio'/>
+I1006 15:00:54.986121   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+I1006 15:00:54.986125   92759 main.go:141] libmachine: (kanban) DBG |     </disk>
+I1006 15:00:54.986133   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='usb' index='0' model='piix3-uhci'>
+I1006 15:00:54.986140   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
+I1006 15:00:54.986174   92759 main.go:141] libmachine: (kanban) DBG |     </controller>
+I1006 15:00:54.986192   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='pci' index='0' model='pci-root'/>
+I1006 15:00:54.986202   92759 main.go:141] libmachine: (kanban) DBG |     <controller type='scsi' index='0' model='lsilogic'>
+I1006 15:00:54.986210   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
+I1006 15:00:54.986217   92759 main.go:141] libmachine: (kanban) DBG |     </controller>
+I1006 15:00:54.986223   92759 main.go:141] libmachine: (kanban) DBG |     <interface type='network'>
+I1006 15:00:54.986230   92759 main.go:141] libmachine: (kanban) DBG |       <mac address='52:54:00:c2:17:a7'/>
+I1006 15:00:54.986236   92759 main.go:141] libmachine: (kanban) DBG |       <source network='mk-kanban'/>
+I1006 15:00:54.986243   92759 main.go:141] libmachine: (kanban) DBG |       <model type='virtio'/>
+I1006 15:00:54.986250   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+I1006 15:00:54.986256   92759 main.go:141] libmachine: (kanban) DBG |     </interface>
+I1006 15:00:54.986264   92759 main.go:141] libmachine: (kanban) DBG |     <interface type='network'>
+I1006 15:00:54.986271   92759 main.go:141] libmachine: (kanban) DBG |       <mac address='52:54:00:3d:f4:6e'/>
+I1006 15:00:54.986279   92759 main.go:141] libmachine: (kanban) DBG |       <source network='default'/>
+I1006 15:00:54.986286   92759 main.go:141] libmachine: (kanban) DBG |       <model type='virtio'/>
+I1006 15:00:54.986293   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+I1006 15:00:54.986300   92759 main.go:141] libmachine: (kanban) DBG |     </interface>
+I1006 15:00:54.986305   92759 main.go:141] libmachine: (kanban) DBG |     <serial type='pty'>
+I1006 15:00:54.986312   92759 main.go:141] libmachine: (kanban) DBG |       <target type='isa-serial' port='0'>
+I1006 15:00:54.986317   92759 main.go:141] libmachine: (kanban) DBG |         <model name='isa-serial'/>
+I1006 15:00:54.986323   92759 main.go:141] libmachine: (kanban) DBG |       </target>
+I1006 15:00:54.986327   92759 main.go:141] libmachine: (kanban) DBG |     </serial>
+I1006 15:00:54.986334   92759 main.go:141] libmachine: (kanban) DBG |     <console type='pty'>
+I1006 15:00:54.986339   92759 main.go:141] libmachine: (kanban) DBG |       <target type='serial' port='0'/>
+I1006 15:00:54.986368   92759 main.go:141] libmachine: (kanban) DBG |     </console>
+I1006 15:00:54.986382   92759 main.go:141] libmachine: (kanban) DBG |     <input type='mouse' bus='ps2'/>
+I1006 15:00:54.986393   92759 main.go:141] libmachine: (kanban) DBG |     <input type='keyboard' bus='ps2'/>
+I1006 15:00:54.986399   92759 main.go:141] libmachine: (kanban) DBG |     <audio id='1' type='none'/>
+I1006 15:00:54.986408   92759 main.go:141] libmachine: (kanban) DBG |     <memballoon model='virtio'>
+I1006 15:00:54.986417   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
+I1006 15:00:54.986425   92759 main.go:141] libmachine: (kanban) DBG |     </memballoon>
+I1006 15:00:54.986431   92759 main.go:141] libmachine: (kanban) DBG |     <rng model='virtio'>
+I1006 15:00:54.986448   92759 main.go:141] libmachine: (kanban) DBG |       <backend model='random'>/dev/random</backend>
+I1006 15:00:54.986459   92759 main.go:141] libmachine: (kanban) DBG |       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+I1006 15:00:54.986468   92759 main.go:141] libmachine: (kanban) DBG |     </rng>
+I1006 15:00:54.986473   92759 main.go:141] libmachine: (kanban) DBG |   </devices>
+I1006 15:00:54.986479   92759 main.go:141] libmachine: (kanban) DBG | </domain>
+I1006 15:00:54.986483   92759 main.go:141] libmachine: (kanban) DBG | 
+I1006 15:00:56.069242   92759 main.go:141] libmachine: (kanban) waiting for domain to start...
+I1006 15:00:56.071466   92759 main.go:141] libmachine: (kanban) domain is now running
+I1006 15:00:56.071480   92759 main.go:141] libmachine: (kanban) waiting for IP...
+I1006 15:00:56.072400   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:56.072709   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:56.072737   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:56.073290   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:56.073209   93340 retry.go:31] will retry after 261.795822ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:56.337160   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:56.337931   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:56.337946   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:56.338464   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:56.338382   93340 retry.go:31] will retry after 389.419954ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:56.729242   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:56.729939   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:56.729952   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:56.730560   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:56.730439   93340 retry.go:31] will retry after 298.232545ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:57.030262   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:57.031363   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:57.031382   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:57.032003   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:57.031861   93340 retry.go:31] will retry after 511.228194ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:57.545103   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:57.545938   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:57.545952   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:57.546614   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:57.546453   93340 retry.go:31] will retry after 495.927954ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:58.044809   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:58.045657   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:58.045671   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:58.046325   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:58.046195   93340 retry.go:31] will retry after 690.916147ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:58.739747   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:58.740575   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:58.740587   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:58.741266   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:58.741132   93340 retry.go:31] will retry after 862.60034ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:00:59.606386   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:00:59.607086   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:00:59.607101   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:00:59.607795   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:00:59.607657   93340 retry.go:31] will retry after 920.2724ms: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:00.530114   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:00.530757   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:00.530767   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:00.531275   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:00.531181   93340 retry.go:31] will retry after 1.372723962s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:01.906142   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:01.906771   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:01.906786   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:01.907518   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:01.907402   93340 retry.go:31] will retry after 1.757166121s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:03.668054   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:03.668857   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:03.668870   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:03.669393   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:03.669298   93340 retry.go:31] will retry after 2.328372117s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:05.999451   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:06.000064   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:06.000080   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:06.000621   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:06.000521   93340 retry.go:31] will retry after 2.505026468s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:08.509419   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:08.509996   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:08.510008   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:08.510525   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:08.510426   93340 retry.go:31] will retry after 3.544637093s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:12.059051   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:12.059771   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:12.059783   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:12.060362   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:12.060254   93340 retry.go:31] will retry after 4.540935665s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:16.604006   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:16.604632   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:16.604646   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:16.605349   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:16.605212   93340 retry.go:31] will retry after 4.855810459s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:21.464136   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:21.464948   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:21.464957   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:21.465440   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:21.465372   93340 retry.go:31] will retry after 8.839777936s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:30.307189   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:30.307835   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:30.307854   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:30.308315   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:30.308246   93340 retry.go:31] will retry after 10.254621268s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:40.564938   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:40.565576   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:40.565585   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:40.566298   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:40.566161   93340 retry.go:31] will retry after 10.86438051s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:01:51.433233   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:01:51.433806   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:01:51.433815   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:01:51.434344   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:01:51.434239   93340 retry.go:31] will retry after 13.511771794s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:02:04.947859   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:02:04.948661   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:02:04.948672   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:02:04.949385   92759 main.go:141] libmachine: (kanban) DBG | I1006 15:02:04.949250   93340 retry.go:31] will retry after 14.110289393s: getting domain IP, will retry: failed getting network mk-kanban interfaces using API of domain kanban: failed listing network interface addresses of domain kanban (source=arp): virError(Code=1, Domain=0, Message='internal error: wrong nlmsg len')
+I1006 15:02:19.065225   92759 main.go:141] libmachine: (kanban) DBG | domain kanban has defined MAC address 52:54:00:c2:17:a7 in network mk-kanban
+I1006 15:02:19.065992   92759 main.go:141] libmachine: (kanban) DBG | no network interface addresses found for domain kanban (source=lease)
+I1006 15:02:19.066019   92759 main.go:141] libmachine: (kanban) DBG | trying to list again with source=arp
+I1006 15:02:19.067297   92759 client.go:171] duration metric: took 1m24.474923203s to LocalClient.Create
+I1006 15:02:21.068115   92759 start.go:128] duration metric: took 1m26.503557715s to createHost
+I1006 15:02:21.068135   92759 start.go:83] releasing machines lock for "kanban", held for 1m26.503904238s
+W1006 15:02:21.068244   92759 out.go:285] 😿  Failed to start kvm2 VM. Running "minikube delete -p kanban" may fix it: creating host: create: Error creating machine: Error in driver during machine creation: starting domain: waiting for IP: domain kanban didn't return IP after 1m30s
+I1006 15:02:21.069190   92759 out.go:203] 
+W1006 15:02:21.069779   92759 out.go:285] ❌  Exiting due to GUEST_PROVISION: error provisioning guest: Failed to start host: creating host: create: Error creating machine: Error in driver during machine creation: starting domain: waiting for IP: domain kanban didn't return IP after 1m30s
+W1006 15:02:21.069804   92759 out.go:285] 
+W1006 15:02:21.072552   92759 out.go:308] [31m╭───────────────────────────────────────────────────────────────────────────────────────────╮[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    😿  If the above advice does not help, please let us know:                             [31m│[0m
+[31m│[0m    👉  https://github.com/kubernetes/minikube/issues/new/choose                           [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m│[0m    Please run `minikube logs --file=logs.txt` and attach logs.txt to the GitHub issue.    [31m│[0m
+[31m│[0m                                                                                           [31m│[0m
+[31m╰───────────────────────────────────────────────────────────────────────────────────────────╯[0m
+I1006 15:02:21.073288   92759 out.go:203] 
+
+

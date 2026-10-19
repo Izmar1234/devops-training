@@ -1,0 +1,42 @@
+deployment:
+  replicas: 1
+
+nodeSelector:
+  kubernetes.io/hostname: kanban-helm-m02
+
+ingressClass:
+  enabled: true
+  name: traefik
+  isDefaultClass: false
+
+providers:
+  kubernetesIngress:
+    enabled: true
+  kubernetesCRD:
+    enabled: true
+  kubernetesGateway:
+    enabled: false
+
+service:
+  spec:
+    type: NodePort
+
+ports:
+  web:
+    exposedPort: 80
+    nodePort: 30080
+  websecure:
+    expose:
+      default: false
+
+ingressRoute:
+  dashboard:
+    enabled: false
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
